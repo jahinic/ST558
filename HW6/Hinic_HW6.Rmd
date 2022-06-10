@@ -1,0 +1,175 @@
+---
+title: "ST 558 Homework 6"
+author: "John Hinic"
+date: '2022-06-10'
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+    theme: readable
+    code_folding: show
+    df_print: tibble
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(include = TRUE, warning = FALSE, message = FALSE)
+library(tidyverse)
+library(readxl)
+library(httr)
+library(DBI)
+library(RSQLite)
+library(jsonlite)
+```
+
+# Summarizing Data
+
+## Reading in Data
+
+Reading in the raw data file:
+```{r raw}
+crabs <- read_fwf(
+  "crabs.txt", 
+  fwf_widths(c(3, 3, 6, 3, 5, NA),
+             c("color", "spine", "width", "satell", "weight", "y")),
+  skip = 1
+)
+```
+
+Re-formatting and re-levelling the factor variables in the dataset:
+```{r cleaning}
+crabs <- crabs %>%
+  mutate(
+    color = factor(color, labels = c("light", "medium", "dark", "darker")),
+    spine = factor(spine, labels = c("Both Good", "One Worn/Broken", "Both Worn/Broken")),
+    y = factor(y, labels = c("No Satellite", "At least 1 Satellite"))
+  )
+crabs
+```
+
+## Creating Contingency Tables
+
+One-way contingency tables of spine:
+```{r spine}
+# using table()
+table(crabs$spine)
+
+# using tidyverse 
+crabs %>%
+  count(spine)
+```
+
+Two-way contingency tables of spine x satellite:
+```{r spine x satellite}
+# using table()
+table(crabs$satell, crabs$spine)
+
+# using tidyverse and pivoting to wide format
+crabs %>% 
+  count(spine, satell) %>%
+  pivot_wider(names_from = satell, values_from = n, values_fill = 0)
+```
+
+From the first table, we can see from the top left cell that there were 11 crabs with 0 satellites that had both spines(?) in good condition. We can also see that the highest frequency category was crabs with 0 satellites and both worn/broken, with 43 total observations.
+
+*I wasn't sure how wide we were supposed to pivot the second table, so I used the number of satellites as columns since that is the wider version - although I think that looks pretty bad, so I would definitely use the spine variable to name the columns in reality.
+
+```{r color x spine x satellite}
+# using table() for 3-way table
+threeWayTable <- table(crabs$satell, crabs$spine, crabs$color)
+threeWayTable
+
+# subsetting to only crabs with darker color
+threeWayTable[ , , 4]
+```
+
+Consistent with the entire sample of crabs, we can see that the most common category among darker crabs is still 0 satellites and both worn/broken with 13 observations.
+
+
+## Plotting the Data
+
+Side-by-side bar plots of color and spine:
+```{r bar plots}
+# crab color by satellites
+crabs %>%
+  ggplot(aes(color, fill = y)) +
+  geom_bar(position = "dodge") +
+  coord_flip() +
+  labs(x = "Female Crab Color") +
+  scale_fill_discrete(name = "")
+
+# crab spine condition by satellites
+crabs %>%
+  ggplot(aes(spine, fill = y)) +
+  geom_bar(position = "dodge") +
+  coord_flip() +
+  labs(x = "Female Crab Spine Condition") +
+  scale_fill_discrete(name = "")
+
+# crab spine condition by color
+crabs %>%
+  ggplot(aes(spine, fill = color)) +
+  geom_bar(position = "dodge") +
+  coord_flip() +
+  labs(x = "Female Crab Spine Condition") +
+  scale_fill_discrete(name = "Female Crab Color")
+```
+
+A couple things that stood out to me from these bar plots is that it seems like female crabs with "darker" color are not doing particularly well; they are the only color that has more females with no satellites than females with at least one satellite. It also appears that darker females have a much higher proportion with both spines worn/broken than otherwise.
+
+Faceted side-by-side bar plots:
+```{r bar plots 2}
+crabs %>%
+  ggplot(aes(color, fill = y)) +
+  geom_bar(position = "dodge") +
+  labs(x = "Female Crab Spine Condition") +
+  scale_fill_discrete(name = "") +
+  theme(axis.text.x = element_text(angle = 45)) +
+  facet_wrap(. ~ spine, labeller = label_both)
+```
+
+The main thing I notice here is from the far right plot; there is *clearly* a downward trend in the proportion of female crabs with at least one satellite as the color gets darker.I think the sample sizes of crabs with more healthy spines is not large enough to draw much from.
+
+Summary of weight:
+```{r weight summary}
+crabs %>%
+  group_by(color, y) %>%
+  summarise(Avg = mean(weight), SD = sd(weight), Median = median(weight), IQR = IQR(weight), n = n())
+```
+
+From this table, we can see that darker female crabs with 1+ satellite have a mean weight of 2200g, a standard deviation of 523g, a median of 2100g, and an IQR of 200. However this group only includes 7 crabs so it is not particularly reliable.
+
+Box plots of weight and width:
+```{r boxplots}
+# weight by y
+crabs %>% 
+  ggplot(aes(y, weight)) +
+  geom_boxplot() +
+  geom_jitter(aes(color = y)) +
+  labs(title = "Boxplot for Weight")
+
+# width by y
+crabs %>% 
+  ggplot(aes(y, width)) +
+  geom_boxplot() +
+  geom_jitter(aes(color = y)) +
+  labs(title = "Boxplot for Width")
+```
+
+One thing that is very clear from these boxplots is that the female crabs with at least one satellite tend to be overall larger than the ones with no satellite. On the weight plot, one of the crabs with 1+ satellite is also a clear outlier (although the median/Q1/Q3 are all robust so that wouldn't impact these plots too much). We can see that there is also an outlier on the width plot that is likely the same crab, but that one is not quite as extreme as the weight.
+
+Finding correlation of weight/width and plotting line of best fit:
+```{r SLR}
+# finding correlation and outputting
+corr <- cor(crabs$width, crabs$weight)
+paste0("The linear correlation between weight and width is ", round(corr, 3), ".")
+
+# plotting width by weight and line of best fit
+crabs %>%
+  ggplot(aes(weight, width)) +
+  geom_point(aes(color = color, shape = y), size = 2) +
+  geom_smooth(method = lm)
+```
+
+We can see from the numeric correlation of 0.887 that there is a very strong, positive relationship between the weight and width of a female crab, which is not surprising. Upon inspection of the plot, we can see the crab that is *much* heavier than the rest on the far right. We can also see that the three lowest weight crabs are actually much wider than expected. I would be curious if those crabs had some kind of defect that lead to that, because they are very unusual observations.
