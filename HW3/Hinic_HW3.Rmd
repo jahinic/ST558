@@ -1,0 +1,107 @@
+---
+title: "Homework 3"
+author: "John Hinic"
+date: '2022-05-31'
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float: true
+    theme: readable
+    code_folding: show
+    df_print: tibble
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(include = TRUE, warning = FALSE, message = FALSE)
+library(knitr)
+library(tidyverse)
+library(Lahman)
+```
+
+# Manipulating Data
+
+## Part 1: Concept Questions
+
+### 1) What are the main differences between a `tibble` and a `data.frame`?
+
+There are two primary differences between `tibble`'s and `data.frame`'s; firstly, the `print()` method is different. `tibble`'s only print the first 10 rows by default and only the columns that fit on the screen by default. Secondly, `tibble`'s do not simplify what they return. If a single column of a `tibble` is returned, it is still a `tibble` object. For `data.frame`'s, a vector object is returned.
+
+### 2) Rewrite the following call using nesting of functions:
+
+```{r piped, echo=TRUE, eval=FALSE}
+library(tidyverse)
+iris %>%
+  as_tibble() %>%
+  select(starts_with("Petal")) %>%
+  filter(Petal.Length < 1.55)
+```
+
+```{r nested, echo=TRUE, eval=TRUE}
+filter(
+  select(
+    as_tibble(iris),       # converting to tibble
+    starts_with("Petal")), # selecting "Petal" variables
+  Petal.Length < 1.55)     # filtering based on length
+```
+
+### 3) What is meant by long format data?
+
+If a data set is in long format, that generally means that it has one row for each observation (though it's possible to have multiple rows per observation as well). This is the preferred format for most software packages, with each column representing a single variable.
+
+## Part 2: Programming Questions
+
+### 1) Read in the `Lahman` package and print the `Pitching` dataset as a tibble.
+
+```{r pitching}
+library(Lahman) # loading package
+Pitching %>% as_tibble() # piping data.frame into as_tibble()
+```
+
+### 2) Select only the columns ending in "ID" as well as IPouts, SO, and BB.
+
+```{r selecting}
+Pitching %>% 
+  as_tibble() %>% # converting to tibble
+  select(ends_with("ID"), IPouts, SO, BB) # selecting desired variables
+```
+
+### 3) Add code to previous question to subset only years 2000 - 2020.
+
+```{r filtering}
+Pitching %>%
+  as_tibble() %>%
+  select(ends_with("ID"), IPouts, SO, BB) %>%
+  filter(yearID %in% c(2000:2020)) # adding year filter to previous code
+```
+
+### 4) Add code to create two new columns: strike out to walk ratio the ratio of walks - strikeouts to number of innings pitched.
+
+```{r mutating}
+Pitching %>%
+  as_tibble() %>%
+  select(ends_with("ID"), IPouts, SO, BB) %>%
+  filter(yearID %in% c(2000:2020)) %>%
+  mutate(SO_to_BB = SO / BB,
+         SO_BB_to_IPouts = (SO - BB) / IPouts) # adding desired ratios to previous code
+```
+
+### 5) Find the average yearly SO's and BB's for each team for 2000 - 2003 and save the results.
+
+```{r summarising}
+avg_SO_BB <- Pitching %>%
+  as_tibble() %>%                                 # converting to tibble
+  filter(yearID %in% c(2000:2003)) %>%            # filtering by year
+  group_by(teamID, yearID) %>%                    # grouping by teamID and yearID
+  summarise(avg_SO = mean(SO), avg_BB = mean(BB)) # calculating desired means for each team/year
+```
+
+### 6) Remove BB and convert previous output to wide format, with each year being a column.
+
+```{r pivoting}
+avg_SO_BB %>%
+  select(-avg_BB) %>% # selecting all variables except mean BB
+  pivot_wider(names_from = yearID, values_from = avg_SO) # converting data set to wide form with years as columns
+```

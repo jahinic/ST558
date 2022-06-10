@@ -1,0 +1,190 @@
+---
+title: "ST 558 Homework 4"
+author: "John Hinic"
+date: '2022-06-01'
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float: true
+    toc_numbers: true
+    theme: readable
+    code_folding: show
+    df_print: tibble
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(include = TRUE, warning = FALSE, message = FALSE)
+```
+
+# R functions
+
+## Part 1: Concept Questions
+
+#### 1) Why can you name a variable `sd` in a function and not cause any issues with the `sd` function?
+
+Functions have their own "local" environment that they store their objects in. This means that the object names are not stored in the global environment, so the `sd` variable inside the custom function is stored _exclusively_ inside that function. 
+
+#### 2) How can you return multiple objects in a custom function?
+
+If you store each of the individual objects as part of a list, you can then just return the list that contains each desired object.
+
+## Part 2: Programming Questions
+
+#### 1) Write a function named `getRMSE` that takes in a vector of responses and a vector of predictions, then outputs the RMSE.
+
+```{r getRMSE}
+getRMSE <- function(response, predicted, ...){
+  n <- length(response) - sum(is.na(response))
+  RMSE <- sqrt( 1/n * sum((response - predicted)^2, ...) )
+  return(RMSE)
+}
+```
+&nbsp;
+&nbsp;
+
+#### 2) Generate some response values/predictions and test the function.
+
+##### Generating data:
+```{r data generation}
+set.seed(10)
+n <- 100
+x <- runif(n)
+resp <- 3 + 10*x + rnorm(n)
+pred <- predict(lm(resp ~ x), data.frame(x))
+```
+&nbsp;
+&nbsp;
+
+##### Testing function:
+```{r testing RMSE}
+# testing no missing values
+getRMSE(resp, pred)
+
+# setting 2 response values to NA
+respMiss <- resp
+respMiss[c(12, 67)] <- NA_real_
+
+# testing missing values with option
+getRMSE(respMiss, pred, na.rm = TRUE)
+
+# testing missing values without option
+getRMSE(respMiss, pred)
+```
+&nbsp;
+&nbsp;
+
+#### 3) Write a similar function using the MAE instead of MSE.
+
+```{r getMAE}
+getMAE <- function(response, predicted, ...){
+  n <- length(response) - sum(is.na(response))
+  MAE <- sum(abs(response - predicted), ...) / n
+  return(MAE)
+}
+```
+&nbsp;
+&nbsp;
+
+#### 4) Test the function using the previously generated data.
+```{r testing MAE}
+# testing no missing values
+getMAE(resp, pred)
+
+# testing missing values with option
+getMAE(respMiss, pred, na.rm = TRUE)
+
+# testing missing values without option
+getMAE(respMiss, pred)
+```
+&nbsp;
+&nbsp;
+
+#### 5) Create a wrapper function that returns both the RMSE and MAE
+```{r wrapper}
+getGOF <- function(response, predicted, metric = c("RMSE", "MAE"), ...){
+  # checking if inputs are valid
+  if(any(!is.vector(c(response, predicted)),
+         !is.atomic(c(response, predicted)),
+         !is.numeric(c(response, predicted))
+         )
+     ){
+    stop("ERROR: invalid input.")
+  }
+  
+  # calculating RMSE if requested
+  if("RMSE" %in% metric){
+    rmse <- getRMSE(response, predicted, ...)
+  } else{
+    rmse <- NA
+  }
+  
+  # calculating MAE if requested
+  if("MAE" %in% metric){
+    mae <- getMAE(response, predicted, ...)
+  } else{
+    mae <- NA
+  }
+  
+  # creating return value(s)
+  values <- list(RMSE = rmse, MAE = mae)
+  return(values[!is.na(values)])
+}
+```
+&nbsp;
+&nbsp;
+
+#### 6) Test the wrapper function using the same generated data.
+```{r testing wrapper, error=TRUE}
+## no missing values
+# RMSE only
+getGOF(resp, pred, metric = "RMSE")
+
+# MAE only
+getGOF(resp, pred, metric = "MAE")
+
+# both metrics
+getGOF(resp, pred)
+
+## with missing values
+# RMSE only
+getGOF(respMiss, pred, metric = "RMSE", na.rm = TRUE)
+
+# MAE only
+getGOF(respMiss, pred, metric = "MAE", na.rm = TRUE)
+
+# both metrics
+getGOF(respMiss, pred, na.rm = TRUE)
+
+## with invalid input
+getGOF(as.data.frame(respMiss), pred)
+```
+&nbsp;
+&nbsp;
+
+#### 7) Write an infix function that replicates the functionality of `cbind()`.
+
+##### Defining the infix cbind function:
+```{r cbind}
+`%c%` <- function(...){
+  cbind(...)
+}
+```
+&nbsp;
+&nbsp;
+
+##### Generating data and testing the function:
+```{r testing cbind}
+# generating data
+df1 <- data.frame(unif = runif(10), norm = rnorm(10))
+df2 <- data.frame(gamma = rgamma(10, shape = 1), beta = rbeta(10, shape1 = 5, shape2 = 1))
+vec1 <- rnorm(10, mean = 10)
+
+# testing 2 data frames
+df1 %c% df2
+
+# testing 2 data frames + vector
+df1 %c% df2 %c% vec1
+```

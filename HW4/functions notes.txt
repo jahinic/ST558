@@ -1,0 +1,18 @@
+conditional logic tips:
+-always use && and || instead of & and |
+-condition MUST be length 1, so cannot use vectorized functions/operations
+
+helpful functions:
+-all()/any(): collapse logical vectors into single value
+-identical()/near(): compare values instead of ==
+-switch(): can sometimes be used instead of a series of if / else if / else
+-cut(): to bin continuous values
+-stopifnot(): easy way to check conditions in functions
+
+
+QUESTIONS:
+-weird camelCase instances
+-return()?
+-how the hell does the ... work
+-more about switch()
+-comments should be "why" but current HW stuff seems pretty self-explanatory

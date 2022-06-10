@@ -1,0 +1,115 @@
+---
+title: "ST 558 Homework 5"
+author: "John Hinic"
+date: '2022-06-06'
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float: true
+    toc_numbers: true
+    theme: readable
+    code_folding: show
+    df_print: tibble
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(include = TRUE, warning = FALSE, message = FALSE)
+library(tidyverse)
+library(readxl)
+library(httr)
+library(DBI)
+library(RSQLite)
+library(jsonlite)
+```
+
+# Reading Data
+
+## Part 1: Concept Questions
+
+1. To get from the working directory `myfolder/homework/` to `myfolder/MyData.csv`, you would specify the path `../MyData.csv`.
+2. The main benefit of using R projects is that it helps you keep multiple different workspaces organized. For example, it may be helpful to have an R project for each class that you use R in. That way, you can keep all the relevant files open and pick up right where you left off every time instead of re-opening all the files you want/need to reference. Having an R project for each homework assignment would be overkill, as there are only going to be a few files related to each assignment so it wouldn't accomplish much.
+3. Git is a version control software, which helps keep track of changes to code and recover old versions is desired. Github is essentially just an online interface to the Git software.
+
+## Part 2: Reading in Excel & Delimited Data
+
+### Reading in white wine data
+
+```{r white}
+# reading in the file and printing the tibble
+white <- read_excel("white-wine.xlsx")
+white
+
+# pulling column names from second sheet of the file
+whiteNames <- read_excel("white-wine.xlsx", sheet = 2)$Variables
+colnames(white) <- whiteNames
+
+# adding a column to indicate the type of wine
+white <- white %>%
+  mutate(type = "white")
+```
+
+### Reading in red wine data
+
+```{r red}
+# reading in the file, adding in type column, and assigning same colnames as the white win dataset
+red <- read_delim(
+  "https://www4.stat.ncsu.edu/~online/datasets/red-wine.csv",
+  delim = ";"
+  ) %>%
+  mutate(type = "red")
+colnames(red) <- colnames(white)
+```
+
+### Combining the wine datasets
+
+```{r wine}
+wine <- white %>%
+  bind_rows(red)
+```
+
+### Part 3: Databases
+
+```{r chinook}
+# connect to the database
+chinook <- dbConnect(SQLite(), "chinook.db")
+
+# list the tables in the database
+dbListTables(chinook)
+
+# print the invoices and customers tables
+invoices <- tbl(chinook, "invoices") %>%
+  collect()
+customers <- tbl(chinook, "customers") %>%
+  collect()
+invoices
+customers
+
+# inner joining the invoices and customers datasets
+custInvoices <- invoices %>%
+  inner_join(customers, by = "CustomerId") %>%
+  collect()
+
+# disconnect from database
+dbDisconnect(chinook)
+```
+
+### Part 4: Querying an API
+
+Gathering news about Sony starting in June
+```{r API}
+# url for the API query
+url <- "https://newsapi.org/v2/everything?q=Sony&from=2022-06-01&sortBy=popularity&apiKey=9ba88f9d49f24fb383b7e5aca248fd42"
+get_sony <- GET(url)
+
+# converting to text, parsing, and then to a tibble, keeping only the source, author, and title columns and then printing
+sonyNews <- get_sony %>%
+  content("text") %>%
+  fromJSON(flatten = TRUE) %>%
+  as.data.frame() %>%
+  select(starts_with("articles.source"), articles.author, articles.title) %>%
+  as_tibble()
+sonyNews
+```
