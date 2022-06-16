@@ -3,11 +3,9 @@ title: "ST 558 Homework 7"
 author: "John Hinic"
 date: '2022-06-14'
 output:
-  html_document:
+  pdf_document:
     toc: true
     toc_depth: 2
-    theme: readable
-    code_folding: show
     df_print: tibble
 editor_options: 
   chunk_output_type: console
