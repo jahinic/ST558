@@ -178,6 +178,7 @@ resultsTall <- tibble(
   n = map_dbl(resultsList, "n"),
   shape = map_dbl(resultsList, "shape")
 )
+
 pivot_wider(
   resultsTall, 
   names_from = shape, 

@@ -1,0 +1,128 @@
+---
+title: "ST 558 Project 1"
+author: "John Hinic"
+date: '2022-06-26'
+output:
+  pdf_document:
+    toc: true
+    toc_depth: 2
+    df_print: tibble
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(include = TRUE, warning = FALSE, message = FALSE)
+library(tidyverse)
+library(parallel)
+library(readxl)
+library(httr)
+library(DBI)
+library(RSQLite)
+library(jsonlite)
+```
+
+# Querying APIs in R
+
+## Introduction
+
+The purpose of this vignette is to give a brief overview of accessing APIs within R, writing custom functions that make the process easier, and performing some basic exploratory data analysis (EDA) on the data we use.
+
+The API we are going to utilize is [polygon.io](https://polygon.io/docs/getting-started), which contains some financial data of various stocks, options, and currencies.
+
+
+### Required Packages
+
+The following packages (and their purpose) will be required:
+
+- `tidyverse`:
+- `httr`:
+
+
+### Basic API Info
+
+Endpoints, scope, etc.
+
+
+## Accessing the API
+
+What function(s) will do
+
+
+### Writing Function(s)
+
+Format of input, format of output, etc.
+
+```{r functions}
+
+```
+
+
+### Function Demonstration
+
+Showing the function works on a few different datasets/endpoints and the format of the returned data
+
+```{r examples}
+
+```
+
+
+### Analysis Data
+
+Using the function(s) to pull the data for analysis and describing variables
+
+```{r final data}
+
+```
+
+
+## Exploratory Data Analysis
+
+General overview of what our "response" and/or "predictors" are
+
+### Univariate Summaries
+
+graphs/summaries/etc.
+
+```{r}
+
+```
+
+interesting because...
+
+```{r}
+
+```
+
+insightful because...
+
+
+### Bivariate Summaries
+
+contingency table(s), grouped summaries, colored/grouped graphs
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+
+### Trivariate Summaries
+
+sicko mode graphs / summaries
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+
+### "Conclusions"
+
+Overall / general findings
