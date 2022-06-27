@@ -51,13 +51,118 @@ It is not feasible to explore the entire API in this vignette, so we will focus 
 
 ## Accessing the API
 
-Accessing desired parts of the API essentially boils down to constructing the correct URL. 
+Accessing desired parts of the API essentially boils down to constructing the correct URL. To do this, we start with the base URL (`https://api.polygon.io`), then add onto that based on which data we want. As stated, we are going to focus on exploring one market data endpoint and one reference data endpoint. Each of these endpoints has a specific URL format that you will need to add to the end of the base URL, with several parameters for the user to specify within the "{}". The formats are as follows:
 
-### Writing Function(s)
+- Aggregates (Bars): `/v2/aggs/ticker/{stocksTicker}/range/{multiplier}/{timespan}/{from}/{to}`
+  - stocksTicker: the ticker symbol for the stock data we want to pull
+  - multiplier: what to multiply the specified timespan by (i.e. if multiplier = 3 and timespan = day, the 3-day bars will be returned)
+  - timespan: the size of the time window for the bars (can be minute, hour, day, week, month, quarter, or year)
+  - from: the start date in format "YYYY-MM-DD" (up to 2 years prior to the current date)
+  - to: the end date in format "YYYY-MM-DD"
+- Ticker Details V3: `/v3/reference/tickers/{ticker}`
+  - ticker: the ticker symbol we want to pull the details of
+  
+There are also some options that are not required that the user can specify, such as whether the results should be adjusted for splits (`TRUE` by default), whether the sort should be ascending or descending, and a limit for the number of results. To specify these options, you would construct the URL as previously described, put a '?' at the end, and then specify the desired options (separated by '&').
 
-Format of input, format of output, etc.
+For any query of the API, you will also need to supply your API key at the end (similar to other options, you would specify 'apiKey=*yourkey*').
 
-```{r function}
+We are going to write some custom functions that allow the user to specify which data they want, and will then construct the URL, parse the data, and return a neat dataframe for the user to analyze.
+
+### Writing Functions
+
+The first function will be designed to query the bars endpoint. It will require several arguments from the user:
+
+- ticker (can be the symbol for any company or the full company name for a select few)
+- start/end dates (must be in YYYY-MM-DD format)
+- multiplier (as described above)
+- timespan (as described above - minute, hour, day, week, month, quarter, or year)
+- apikey (the user's API key)
+
+As stated, the ticker can be the official ticker symbol (i.e. "AAPL" for Apple) for any company, but will accept the following company names as well:
+
+- "Apple", "Apple Inc."
+- "Google", "Alphabet Inc. Class A"
+- "Microsoft", "Microsoft Corporation"
+- "Amazon", "Amazon.com, Inc."
+
+Aside from the required arguments, there will also be several options that the user can specify if desired:
+
+- adjusted (boolean, whether the results should be adjusted for splits)
+- sort ("asc"/"ascending" or "desc"/"descending")
+- limit (the maximum number of base aggregates used to create aggregate results)
+
+The returned data frame will only contain the relevant columns, not the data pertaining to the query itself.
+
+```{r bars function}
+pullBars <- function(
+    ticker, 
+    start, 
+    end, 
+    multiplier = 1, 
+    timespan = "day", 
+    adj = TRUE, 
+    sort = "asc", 
+    limit = 50000,
+    apikey = "meDW5a0CdiQrg_pqfIRI1yanOQ3FwPFu"
+) {
+  # resolving ticker symbols
+  tick <- switch(
+    tolower(ticker),
+    "apple" = ,
+    "apple inc." = "AAPL",
+    "google" = ,
+    "alphabet class a inc." = "GOOGL",
+    "amazon" = ,
+    "amazon.com, inc." = "AMZN",
+    "microsoft" = ,
+    "microsoft corporation" = "MSFT",
+    ticker
+  )
+  base <- "https://api.polygon.io/v2/aggs/ticker/"
+  #/v2/aggs/ticker/{stocksTicker}/range/{multiplier}/{timespan}/{from}/{to}
+  base2 <- paste0(base, tick, '/range/', as.character(multiplier), '/', timespan, '/', start, '/', end, '/')
+  
+  # resolving sort values
+  srt <- switch(
+    tolower(sort),
+    "asc" = ,
+    "ascending" = "sort=asc",
+    "desc" = ,
+    "descending" = "sort=desc"
+  )
+  
+  # resolving adjusted option
+  adjOpt <- switch(
+    as.character(adj),
+    "TRUE" = "adjusted=true",
+    "FALSE" = "adjusted=false"
+  )
+  
+  # resolving limit option
+  lim <- paste0("limit=", as.character(limit))
+  
+  # resolving key
+  key <- paste0("apiKey=", apikey)
+  
+  # combining options into single string
+  opts <- paste(srt, adjOpt, lim, key, sep = "&")
+  
+  # combining base URL with options for final URL
+  url <- paste(base2, opts, sep = "?")
+  
+  # querying data and converting to data frame with only relevant columns
+  GET(url) %>%
+    content("text", encoding = "UTF-8") %>%
+    fromJSON(flatten = TRUE) %>%
+    as.data.frame() %>%
+    select(ticker, queryCount, resultsCount, adjusted, volume = results.v, 
+           volWeighted = results.vw, open = results.o, close = results.c, 
+           high = results.h, low = results.l, transactions = results.n)
+}
+```
+
+
+```{r testing}
 key <- "meDW5a0CdiQrg_pqfIRI1yanOQ3FwPFu"
 url <- paste0("https://api.polygon.io/v2/aggs/ticker/CS/range/1/day/2021-06-01/2021-07-01?apiKey=", key)
 
@@ -85,6 +190,56 @@ test <- GET(url) %>%
   as.data.frame() %>%
   as_tibble()
 View(test)
+```
+
+With the function to pull the actual market data complete, we will now construct a function that pulls reference data with specific details about the supplied ticker and overall company. This function will be similar to the previous, but have fewer arguments due to the lower level of complexity:
+
+- ticker (identical to previous function)
+- date (optional, will return information about the supplied ticker on the specific date. Must be in YYYY-MM-DD format)
+- apikey (the user's API key)
+
+```{r details function}
+pullDetails <- function(
+    ticker,
+    date = '',
+    apikey = 'meDW5a0CdiQrg_pqfIRI1yanOQ3FwPFu'
+) {
+  # resolving ticker symbols
+  tick <- switch(
+    tolower(ticker),
+    "apple" = ,
+    "apple inc." = "AAPL",
+    "google" = ,
+    "alphabet class a inc." = "GOOGL",
+    "amazon" = ,
+    "amazon.com, inc." = "AMZN",
+    "microsoft" = ,
+    "microsoft corporation" = "MSFT",
+    ticker
+  )
+  
+  # resolving key
+  key <- paste0("apiKey=", apikey)
+  
+  # resolving date if specified
+  if(length(date) > 0){
+    dateOpt <- paste0('date=', date, '&')
+  } else {
+    dateOpt <- ''
+  }
+  
+  # constructing final URL
+  base <- 'https://api.polygon.io/v3/reference/tickers/AAPL?'
+  opts <- paste0(dateOpt, key)
+  url <- paste0(base, opts)
+  
+  # querying data and converting to data frame with only relevant columns
+  GET(url) %>%
+    content("text", encoding = "UTF-8") %>%
+    fromJSON(flatten = TRUE) %>%
+    as.data.frame() %>%
+    as_tibble()
+}
 ```
 
 
