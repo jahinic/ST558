@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style type="text/css">
+@font-face {
+font-family: octicons-link;
+src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+body {
+-webkit-text-size-adjust: 100%;
+text-size-adjust: 100%;
+color: #333;
+font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+font-size: 16px;
+line-height: 1.6;
+word-wrap: break-word;
+}
+a {
+background-color: transparent;
+}
+a:active,
+a:hover {
+outline: 0;
+}
+strong {
+font-weight: bold;
+}
+h1 {
+font-size: 2em;
+margin: 0.67em 0;
+}
+img {
+border: 0;
+}
+hr {
+box-sizing: content-box;
+height: 0;
+}
+pre {
+overflow: auto;
+}
+code,
+kbd,
+pre {
+font-family: monospace, monospace;
+font-size: 1em;
+}
+input {
+color: inherit;
+font: inherit;
+margin: 0;
+}
+html input[disabled] {
+cursor: default;
+}
+input {
+line-height: normal;
+}
+input[type="checkbox"] {
+box-sizing: border-box;
+padding: 0;
+}
+table {
+border-collapse: collapse;
+border-spacing: 0;
+}
+td,
+th {
+padding: 0;
+}
+* {
+box-sizing: border-box;
+}
+input {
+font: 13px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+a {
+color: #4078c0;
+text-decoration: none;
+}
+a:hover,
+a:active {
+text-decoration: underline;
+}
+hr {
+height: 0;
+margin: 15px 0;
+overflow: hidden;
+background: transparent;
+border: 0;
+border-bottom: 1px solid #ddd;
+}
+hr:before {
+display: table;
+content: "";
+}
+hr:after {
+display: table;
+clear: both;
+content: "";
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+margin-top: 15px;
+margin-bottom: 15px;
+line-height: 1.1;
+}
+h1 {
+font-size: 30px;
+}
+h2 {
+font-size: 21px;
+}
+h3 {
+font-size: 16px;
+}
+h4 {
+font-size: 14px;
+}
+h5 {
+font-size: 12px;
+}
+h6 {
+font-size: 11px;
+}
+blockquote {
+margin: 0;
+}
+ul,
+ol {
+padding: 0;
+margin-top: 0;
+margin-bottom: 0;
+}
+ol ol,
+ul ol {
+list-style-type: lower-roman;
+}
+ul ul ol,
+ul ol ol,
+ol ul ol,
+ol ol ol {
+list-style-type: lower-alpha;
+}
+dd {
+margin-left: 0;
+}
+code {
+font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+font-size: 12px;
+}
+pre {
+margin-top: 0;
+margin-bottom: 0;
+font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+.select::-ms-expand {
+opacity: 0;
+}
+.octicon {
+font: normal normal normal 16px/1 octicons-link;
+display: inline-block;
+text-decoration: none;
+text-rendering: auto;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+.octicon-link:before {
+content: '\f05c';
+}
+.markdown-body:before {
+display: table;
+content: "";
+}
+.markdown-body:after {
+display: table;
+clear: both;
+content: "";
+}
+.markdown-body>*:first-child {
+margin-top: 0 !important;
+}
+.markdown-body>*:last-child {
+margin-bottom: 0 !important;
+}
+a:not([href]) {
+color: inherit;
+text-decoration: none;
+}
+.anchor {
+display: inline-block;
+padding-right: 2px;
+margin-left: -18px;
+}
+.anchor:focus {
+outline: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+margin-top: 1em;
+margin-bottom: 16px;
+font-weight: bold;
+line-height: 1.4;
+}
+h1 .octicon-link,
+h2 .octicon-link,
+h3 .octicon-link,
+h4 .octicon-link,
+h5 .octicon-link,
+h6 .octicon-link {
+color: #000;
+vertical-align: middle;
+visibility: hidden;
+}
+h1:hover .anchor,
+h2:hover .anchor,
+h3:hover .anchor,
+h4:hover .anchor,
+h5:hover .anchor,
+h6:hover .anchor {
+text-decoration: none;
+}
+h1:hover .anchor .octicon-link,
+h2:hover .anchor .octicon-link,
+h3:hover .anchor .octicon-link,
+h4:hover .anchor .octicon-link,
+h5:hover .anchor .octicon-link,
+h6:hover .anchor .octicon-link {
+visibility: visible;
+}
+h1 {
+padding-bottom: 0.3em;
+font-size: 2.25em;
+line-height: 1.2;
+border-bottom: 1px solid #eee;
+}
+h1 .anchor {
+line-height: 1;
+}
+h2 {
+padding-bottom: 0.3em;
+font-size: 1.75em;
+line-height: 1.225;
+border-bottom: 1px solid #eee;
+}
+h2 .anchor {
+line-height: 1;
+}
+h3 {
+font-size: 1.5em;
+line-height: 1.43;
+}
+h3 .anchor {
+line-height: 1.2;
+}
+h4 {
+font-size: 1.25em;
+}
+h4 .anchor {
+line-height: 1.2;
+}
+h5 {
+font-size: 1em;
+}
+h5 .anchor {
+line-height: 1.1;
+}
+h6 {
+font-size: 1em;
+color: #777;
+}
+h6 .anchor {
+line-height: 1.1;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table,
+pre {
+margin-top: 0;
+margin-bottom: 16px;
+}
+hr {
+height: 4px;
+padding: 0;
+margin: 16px 0;
+background-color: #e7e7e7;
+border: 0 none;
+}
+ul,
+ol {
+padding-left: 2em;
+}
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+margin-top: 0;
+margin-bottom: 0;
+}
+li>p {
+margin-top: 16px;
+}
+dl {
+padding: 0;
+}
+dl dt {
+padding: 0;
+margin-top: 16px;
+font-size: 1em;
+font-style: italic;
+font-weight: bold;
+}
+dl dd {
+padding: 0 16px;
+margin-bottom: 16px;
+}
+blockquote {
+padding: 0 15px;
+color: #777;
+border-left: 4px solid #ddd;
+}
+blockquote>:first-child {
+margin-top: 0;
+}
+blockquote>:last-child {
+margin-bottom: 0;
+}
+table {
+display: block;
+width: 100%;
+overflow: auto;
+word-break: normal;
+word-break: keep-all;
+}
+table th {
+font-weight: bold;
+}
+table th,
+table td {
+padding: 6px 13px;
+border: 1px solid #ddd;
+}
+table tr {
+background-color: #fff;
+border-top: 1px solid #ccc;
+}
+table tr:nth-child(2n) {
+background-color: #f8f8f8;
+}
+img {
+max-width: 100%;
+box-sizing: content-box;
+background-color: #fff;
+}
+code {
+padding: 0;
+padding-top: 0.2em;
+padding-bottom: 0.2em;
+margin: 0;
+font-size: 85%;
+background-color: rgba(0,0,0,0.04);
+border-radius: 3px;
+}
+code:before,
+code:after {
+letter-spacing: -0.2em;
+content: "\00a0";
+}
+pre>code {
+padding: 0;
+margin: 0;
+font-size: 100%;
+word-break: normal;
+white-space: pre;
+background: transparent;
+border: 0;
+}
+.highlight {
+margin-bottom: 16px;
+}
+.highlight pre,
+pre {
+padding: 16px;
+overflow: auto;
+font-size: 85%;
+line-height: 1.45;
+background-color: #f7f7f7;
+border-radius: 3px;
+}
+.highlight pre {
+margin-bottom: 0;
+word-break: normal;
+}
+pre {
+word-wrap: normal;
+}
+pre code {
+display: inline;
+max-width: initial;
+padding: 0;
+margin: 0;
+overflow: initial;
+line-height: inherit;
+word-wrap: normal;
+background-color: transparent;
+border: 0;
+}
+pre code:before,
+pre code:after {
+content: normal;
+}
+kbd {
+display: inline-block;
+padding: 3px 5px;
+font-size: 11px;
+line-height: 10px;
+color: #555;
+vertical-align: middle;
+background-color: #fcfcfc;
+border: solid 1px #ccc;
+border-bottom-color: #bbb;
+border-radius: 3px;
+box-shadow: inset 0 -1px 0 #bbb;
+}
+.pl-c {
+color: #969896;
+}
+.pl-c1,
+.pl-s .pl-v {
+color: #0086b3;
+}
+.pl-e,
+.pl-en {
+color: #795da3;
+}
+.pl-s .pl-s1,
+.pl-smi {
+color: #333;
+}
+.pl-ent {
+color: #63a35c;
+}
+.pl-k {
+color: #a71d5d;
+}
+.pl-pds,
+.pl-s,
+.pl-s .pl-pse .pl-s1,
+.pl-sr,
+.pl-sr .pl-cce,
+.pl-sr .pl-sra,
+.pl-sr .pl-sre {
+color: #183691;
+}
+.pl-v {
+color: #ed6a43;
+}
+.pl-id {
+color: #b52a1d;
+}
+.pl-ii {
+background-color: #b52a1d;
+color: #f8f8f8;
+}
+.pl-sr .pl-cce {
+color: #63a35c;
+font-weight: bold;
+}
+.pl-ml {
+color: #693a17;
+}
+.pl-mh,
+.pl-mh .pl-en,
+.pl-ms {
+color: #1d3e81;
+font-weight: bold;
+}
+.pl-mq {
+color: #008080;
+}
+.pl-mi {
+color: #333;
+font-style: italic;
+}
+.pl-mb {
+color: #333;
+font-weight: bold;
+}
+.pl-md {
+background-color: #ffecec;
+color: #bd2c00;
+}
+.pl-mi1 {
+background-color: #eaffea;
+color: #55a532;
+}
+.pl-mdr {
+color: #795da3;
+font-weight: bold;
+}
+.pl-mo {
+color: #1d3e81;
+}
+kbd {
+display: inline-block;
+padding: 3px 5px;
+font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+line-height: 10px;
+color: #555;
+vertical-align: middle;
+background-color: #fcfcfc;
+border: solid 1px #ccc;
+border-bottom-color: #bbb;
+border-radius: 3px;
+box-shadow: inset 0 -1px 0 #bbb;
+}
+.task-list-item {
+list-style-type: none;
+}
+.task-list-item+.task-list-item {
+margin-top: 3px;
+}
+.task-list-item input {
+margin: 0 0.35em 0.25em -1.6em;
+vertical-align: middle;
+}
+:checked+.radio-label {
+z-index: 1;
+position: relative;
+border-color: #4078c0;
+}
+.sourceLine {
+display: inline-block;
+}
+code .kw { color: #000000; }
+code .dt { color: #ed6a43; }
+code .dv { color: #009999; }
+code .bn { color: #009999; }
+code .fl { color: #009999; }
+code .ch { color: #009999; }
+code .st { color: #183691; }
+code .co { color: #969896; }
+code .ot { color: #0086b3; }
+code .al { color: #a61717; }
+code .fu { color: #63a35c; }
+code .er { color: #a61717; background-color: #e3d2d2; }
+code .wa { color: #000000; }
+code .cn { color: #008080; }
+code .sc { color: #008080; }
+code .vs { color: #183691; }
+code .ss { color: #183691; }
+code .im { color: #000000; }
+code .va {color: #008080; }
+code .cf { color: #000000; }
+code .op { color: #000000; }
+code .bu { color: #000000; }
+code .ex { color: #000000; }
+code .pp { color: #999999; }
+code .at { color: #008080; }
+code .do { color: #969896; }
+code .an { color: #008080; }
+code .cv { color: #008080; }
+code .in { color: #008080; }
+</style>
+<style>
+body {
+  box-sizing: border-box;
+  min-width: 200px;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 45px;
+  padding-top: 0px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1 id="st-558-project-1">ST 558 Project 1</h1>
+<p>John Hinic</p>
+<h1 id="querying-apis-in-r">Querying APIs in R</h1>
+<h2 id="introduction">Introduction</h2>
+<p>The purpose of this vignette is to give a brief overview of accessing
+APIs within R, writing custom functions that make the process easier,
+and performing some basic exploratory data analysis (EDA) on the data we
+use.</p>
+<p>The API we are going to utilize is <a href="https://polygon.io/docs/getting-started">Polygon.io</a>, which
+contains some financial data of various stocks, options, and
+currencies.</p>
+<h3 id="required-packages">Required Packages</h3>
+<p>The following packages (and their purpose) will be required:</p>
+<ul>
+<li><code>tidyverse</code>: for general data manipulation and
+plotting</li>
+<li><code>httr</code>: used to query the API source</li>
+<li><code>jsonlite</code>: used to parse the JSON data returned from the
+API</li>
+</ul>
+<h3 id="basic-api-info">Basic API Info</h3>
+<p>The Polygon.io API contains a plethora of financial data pertaining
+to the stock markets as well as cryptocurrency. As far as pulling actual
+market data, there are several possible endpoints in the free version of
+the API:</p>
+<ul>
+<li>Aggregates (Bars)</li>
+<li>Grouped Daily (Bars)</li>
+<li>Daily Open/Close</li>
+<li>Previous Close</li>
+</ul>
+<p>There are also many endpoints for reference data, which give more
+details to inform queries. These reference endpoints contain things like
+the tickers themselves, the types of tickers, news about tickers,
+etc.</p>
+<p>It is not feasible to explore the entire API in this vignette, so we
+will focus on the “Aggregates (Bars)” market data endpoint, as well as
+the “Ticker Details V3” reference data endpoint.</p>
+<h2 id="accessing-the-api">Accessing the API</h2>
+<p>Accessing desired parts of the API essentially boils down to
+constructing the correct URL. To do this, we start with the base URL
+(<code>https://api.polygon.io</code>), then add onto that based on which
+data we want. As stated, we are going to focus on exploring one market
+data endpoint and one reference data endpoint. Each of these endpoints
+has a specific URL format that you will need to add to the end of the
+base URL, with several parameters for the user to specify within the
+“{}”. The formats are as follows:</p>
+<ul>
+<li>Aggregates (Bars):
+<code>/v2/aggs/ticker/{stocksTicker}/range/{multiplier}/{timespan}/{from}/{to}</code>
+<ul>
+<li>stocksTicker: the ticker symbol for the stock data we want to
+pull</li>
+<li>multiplier: what to multiply the specified timespan by (i.e. if
+multiplier = 3 and timespan = day, the 3-day bars will be returned)</li>
+<li>timespan: the size of the time window for the bars (can be minute,
+hour, day, week, month, quarter, or year)</li>
+<li>from: the start date in format “YYYY-MM-DD” (up to 2 years prior to
+the current date)</li>
+<li>to: the end date in format “YYYY-MM-DD”</li>
+</ul></li>
+<li>Ticker Details V3: <code>/v3/reference/tickers/{ticker}</code>
+<ul>
+<li>ticker: the ticker symbol we want to pull the details of</li>
+</ul></li>
+</ul>
+<p>There are also some options that are not required that the user can
+specify, such as whether the results should be adjusted for splits
+(<code>TRUE</code> by default), whether the sort should be ascending or
+descending, and a limit for the number of results. To specify these
+options, you would construct the URL as previously described, put a ‘?’
+at the end, and then specify the desired options (separated by
+‘&amp;’).</p>
+<p>For any query of the API, you will also need to supply your API key
+at the end (similar to other options, you would specify
+‘apiKey=<em>yourkey</em>’).</p>
+<p>We are going to write some custom functions that allow the user to
+specify which data they want, and will then construct the URL, parse the
+data, and return a neat dataframe for the user to analyze.</p>
+<h3 id="writing-functions">Writing Functions</h3>
+<p>The first function will be designed to query the bars endpoint. It
+will require several arguments from the user:</p>
+<ul>
+<li>ticker (can be the symbol for any company or the full company name
+for a select few)</li>
+<li>start/end dates (must be in YYYY-MM-DD format)</li>
+<li>multiplier (as described above)</li>
+<li>timespan (as described above - minute, hour, day, week, month,
+quarter, or year)</li>
+<li>apikey (the user’s API key)</li>
+</ul>
+<p>As stated, the ticker can be the official ticker symbol (i.e. “AAPL”
+for Apple) for any company, but will accept the following company names
+as well:</p>
+<ul>
+<li>“Apple”, “Apple Inc.”</li>
+<li>“Google”, “Alphabet Inc. Class A”</li>
+<li>“Microsoft”, “Microsoft Corporation”</li>
+<li>“Amazon”, “Amazon.com, Inc.”</li>
+</ul>
+<p>Aside from the required arguments, there will also be several options
+that the user can specify if desired:</p>
+<ul>
+<li>adjusted (boolean, whether the results should be adjusted for
+splits)</li>
+<li>sort (“asc”/“ascending” or “desc”/“descending”)</li>
+<li>limit (the maximum number of base aggregates used to create
+aggregate results)</li>
+</ul>
+<p>The returned data frame will only contain the relevant columns, not
+the data pertaining to the query itself.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pullBars <span class="ot">&lt;-</span> <span class="cf">function</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    ticker, </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    start, </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    end, </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">multiplier =</span> <span class="dv">1</span>, </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">timespan =</span> <span class="st">&quot;day&quot;</span>, </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">adj =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">sort =</span> <span class="st">&quot;asc&quot;</span>, </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">limit =</span> <span class="dv">50000</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">apikey =</span> <span class="st">&quot;meDW5a0CdiQrg_pqfIRI1yanOQ3FwPFu&quot;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>) {</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># resolving ticker symbols</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  tick <span class="ot">&lt;-</span> <span class="cf">switch</span>(</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tolower</span>(ticker),</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;apple&quot;</span> <span class="ot">=</span> ,</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;apple inc.&quot;</span> <span class="ot">=</span> <span class="st">&quot;AAPL&quot;</span>,</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;google&quot;</span> <span class="ot">=</span> ,</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;alphabet class a inc.&quot;</span> <span class="ot">=</span> <span class="st">&quot;GOOGL&quot;</span>,</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;amazon&quot;</span> <span class="ot">=</span> ,</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;amazon.com, inc.&quot;</span> <span class="ot">=</span> <span class="st">&quot;AMZN&quot;</span>,</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;microsoft&quot;</span> <span class="ot">=</span> ,</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;microsoft corporation&quot;</span> <span class="ot">=</span> <span class="st">&quot;MSFT&quot;</span>,</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    ticker</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  base <span class="ot">&lt;-</span> <span class="st">&quot;https://api.polygon.io/v2/aggs/ticker/&quot;</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  <span class="co">#/v2/aggs/ticker/{stocksTicker}/range/{multiplier}/{timespan}/{from}/{to}</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  base2 <span class="ot">&lt;-</span> <span class="fu">paste0</span>(base, tick, <span class="st">&#39;/range/&#39;</span>, <span class="fu">as.character</span>(multiplier), <span class="st">&#39;/&#39;</span>, timespan, <span class="st">&#39;/&#39;</span>, start, <span class="st">&#39;/&#39;</span>, end, <span class="st">&#39;/&#39;</span>)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  <span class="co"># resolving sort values</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  srt <span class="ot">&lt;-</span> <span class="cf">switch</span>(</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tolower</span>(sort),</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;asc&quot;</span> <span class="ot">=</span> ,</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;ascending&quot;</span> <span class="ot">=</span> <span class="st">&quot;sort=asc&quot;</span>,</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;desc&quot;</span> <span class="ot">=</span> ,</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;descending&quot;</span> <span class="ot">=</span> <span class="st">&quot;sort=desc&quot;</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>  <span class="co"># resolving adjusted option</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>  adjOpt <span class="ot">&lt;-</span> <span class="cf">switch</span>(</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.character</span>(adj),</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;TRUE&quot;</span> <span class="ot">=</span> <span class="st">&quot;adjusted=true&quot;</span>,</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;FALSE&quot;</span> <span class="ot">=</span> <span class="st">&quot;adjusted=false&quot;</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>  <span class="co"># resolving limit option</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>  lim <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;limit=&quot;</span>, <span class="fu">as.character</span>(limit))</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>  <span class="co"># resolving key</span></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>  key <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;apiKey=&quot;</span>, apikey)</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>  <span class="co"># combining options into single string</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>  opts <span class="ot">&lt;-</span> <span class="fu">paste</span>(srt, adjOpt, lim, key, <span class="at">sep =</span> <span class="st">&quot;&amp;&quot;</span>)</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>  <span class="co"># combining base URL with options for final URL</span></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>  url <span class="ot">&lt;-</span> <span class="fu">paste</span>(base2, opts, <span class="at">sep =</span> <span class="st">&quot;?&quot;</span>)</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>  <span class="co"># querying data and converting to data frame with only relevant columns</span></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>  data <span class="ot">&lt;-</span> <span class="fu">GET</span>(url) <span class="sc">%&gt;%</span></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>    <span class="fu">content</span>(<span class="st">&quot;text&quot;</span>, <span class="at">encoding =</span> <span class="st">&quot;UTF-8&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fromJSON</span>(<span class="at">flatten =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.data.frame</span>()</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">%&gt;%</span> <span class="fu">colnames</span>() <span class="sc">%&gt;%</span> <span class="fu">print</span>()</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>  final <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span>  </span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">&quot;ticker&quot;</span>), <span class="at">volume =</span> results.v, <span class="at">volWeighted =</span> results.vw, <span class="at">open =</span> results.o,</span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>           <span class="at">close =</span> results.c, <span class="at">high =</span> results.h, <span class="at">low =</span> results.l, <span class="at">transactions =</span> results.n)</span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(final)</span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>With the function to pull the actual market data complete, we will
+now construct a function that pulls reference data with specific details
+about the supplied ticker and overall company. This function will be
+similar to the previous, but have fewer arguments due to the lower level
+of complexity:</p>
+<ul>
+<li>ticker (identical to previous function)</li>
+<li>date (optional, will return information about the supplied ticker on
+the specific date. Must be in YYYY-MM-DD format)</li>
+<li>apikey (the user’s API key)</li>
+</ul>
+<p>This function will return</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pullDetails <span class="ot">&lt;-</span> <span class="cf">function</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    ticker,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">date =</span> <span class="st">&#39;&#39;</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">apikey =</span> <span class="st">&#39;meDW5a0CdiQrg_pqfIRI1yanOQ3FwPFu&#39;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>) {</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># resolving ticker symbols</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  tick <span class="ot">&lt;-</span> <span class="cf">switch</span>(</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tolower</span>(ticker),</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;apple&quot;</span> <span class="ot">=</span> ,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;apple inc.&quot;</span> <span class="ot">=</span> <span class="st">&quot;AAPL&quot;</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;google&quot;</span> <span class="ot">=</span> ,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;alphabet class a inc.&quot;</span> <span class="ot">=</span> <span class="st">&quot;GOOGL&quot;</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;amazon&quot;</span> <span class="ot">=</span> ,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;amazon.com, inc.&quot;</span> <span class="ot">=</span> <span class="st">&quot;AMZN&quot;</span>,</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;microsoft&quot;</span> <span class="ot">=</span> ,</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;microsoft corporation&quot;</span> <span class="ot">=</span> <span class="st">&quot;MSFT&quot;</span>,</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    ticker</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># resolving key</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  key <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;apiKey=&quot;</span>, apikey)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># resolving date if specified</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">length</span>(date) <span class="sc">&gt;</span> <span class="dv">0</span>){</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    dateOpt <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&#39;date=&#39;</span>, date, <span class="st">&#39;&amp;&#39;</span>)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    dateOpt <span class="ot">&lt;-</span> <span class="st">&#39;&#39;</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="co"># constructing final URL</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  base <span class="ot">&lt;-</span> <span class="st">&#39;https://api.polygon.io/v3/reference/tickers/&#39;</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  opts <span class="ot">&lt;-</span> <span class="fu">paste0</span>(tick, <span class="st">&#39;?&#39;</span>, dateOpt, key)</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  url <span class="ot">&lt;-</span> <span class="fu">paste0</span>(base, opts)</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>  <span class="co"># querying data and converting to data frame</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">GET</span>(url) <span class="sc">%&gt;%</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">content</span>(<span class="st">&quot;text&quot;</span>, <span class="at">encoding =</span> <span class="st">&quot;UTF-8&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fromJSON</span>(<span class="at">flatten =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.data.frame</span>()</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="function-demonstration">Function Demonstration</h3>
+<p>Now that both functions are completed, we will demonstrate some basic
+usage of them. For instance, we can pull daily aggregate (adjusted) data
+about Google from the beginning of 2022 until the start of June:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pullBars</span>(<span class="st">&quot;Google&quot;</span>, <span class="st">&quot;2022-01-01&quot;</span>, <span class="st">&quot;2022-06-01&quot;</span>)</span></code></pre></div>
+<pre><code>##  [1] &quot;ticker&quot;       &quot;queryCount&quot;   &quot;resultsCount&quot; &quot;adjusted&quot;     &quot;results.v&quot;    &quot;results.vw&quot;   &quot;results.o&quot;   
+##  [8] &quot;results.c&quot;    &quot;results.h&quot;    &quot;results.l&quot;    &quot;results.t&quot;    &quot;results.n&quot;    &quot;status&quot;       &quot;request_id&quot;  
+## [15] &quot;count&quot;
+
+##     ticker  volume volWeighted     open   close     high      low transactions
+## 1    GOOGL 1433947    2899.406 2901.100 2899.83 2917.020 2874.255       103431
+## 2    GOOGL 1419962    2894.441 2907.920 2887.99 2929.698 2874.325       102667
+## 3    GOOGL 2730914    2800.833 2888.400 2755.50 2889.988 2753.760       199566
+## 4    GOOGL 1867371    2767.210 2739.970 2754.95 2798.800 2731.170       137860
+## 5    GOOGL 1488028    2741.796 2762.910 2740.34 2768.970 2715.330       111612
+## 6    GOOGL 2220406    2723.539 2701.560 2773.39 2776.390 2663.290       184011
+## 7    GOOGL 1436485    2781.827 2760.140 2794.72 2804.320 2733.845       100618
+## 8    GOOGL 1305602    2831.515 2823.000 2828.61 2852.155 2813.890        92377
+## 9    GOOGL 1571830    2803.068 2830.800 2771.74 2857.000 2768.180       110059
+## 10   GOOGL 1483064    2788.653 2741.580 2789.61 2814.840 2739.970       101814
+## 11   GOOGL 1744405    2723.509 2723.500 2719.96 2742.630 2708.765       127973
+## 12   GOOGL 1432382    2731.250 2730.470 2702.33 2759.190 2700.310        95860
+## 13   GOOGL 1495357    2711.310 2725.000 2666.15 2752.520 2659.293       113285
+## 14   GOOGL 2781021    2647.849 2651.870 2607.03 2697.311 2601.730       179951
+## 15   GOOGL 3834712    2549.978 2519.560 2616.08 2624.060 2490.000       261299
+## 16   GOOGL 2348028    2553.207 2574.800 2538.70 2587.980 2530.010       144722
+## 17   GOOGL 2451475    2603.152 2622.380 2584.66 2660.000 2542.840       157806
+## 18   GOOGL 1600939    2610.531 2626.080 2580.10 2653.045 2578.646       124746
+## 19   GOOGL 1718074    2629.422 2593.180 2667.02 2667.130 2569.700       123757
+## 20   GOOGL 1999300    2685.677 2683.240 2706.07 2709.460 2644.190       145681
+## 21   GOOGL 3426282    2794.036 2751.890 2752.88 2755.855 2687.370       263412
+## 22   GOOGL 6159961    2970.289 3025.000 2960.00 3030.932 2910.450       472215
+## 23   GOOGL 3575421    2919.346 2914.110 2861.80 2993.500 2853.306       285469
+## 24   GOOGL 2899911    2860.782 2868.893 2865.86 2897.500 2810.300       215947
+## 25   GOOGL 2748665    2815.259 2885.000 2784.02 2885.000 2778.000       206650
+## 26   GOOGL 2714180    2774.160 2780.530 2787.98 2800.000 2740.277       182224
+## 27   GOOGL 2007194    2824.948 2819.270 2831.84 2850.485 2803.741       148118
+## 28   GOOGL 1966533    2787.698 2794.070 2772.40 2829.690 2759.140       171567
+## 29   GOOGL 1992917    2715.662 2772.000 2685.65 2783.125 2668.000       199155
+## 30   GOOGL 1715054    2702.717 2665.130 2710.52 2726.000 2665.130       130001
+## 31   GOOGL 1335563    2734.193 2751.410 2732.17 2762.170 2716.430       100139
+## 32   GOOGL 1251065    2732.586 2732.930 2754.76 2761.720 2698.475       103758
+## 33   GOOGL 1947475    2681.900 2724.860 2650.78 2742.270 2649.570       161496
+## 34   GOOGL 2179872    2630.627 2669.340 2608.06 2681.400 2603.930       158081
+## 35   GOOGL 2242037    2600.946 2596.762 2596.27 2643.605 2564.465       170077
+## 36   GOOGL 1639301    2580.849 2632.970 2551.76 2641.020 2550.550       145602
+## 37   GOOGL 2719619    2584.156 2499.065 2653.82 2660.000 2499.065       227050
+## 38   GOOGL 1820299    2677.142 2671.040 2689.19 2705.430 2635.030       136500
+## 39   GOOGL 1943221    2686.384 2661.000 2701.14 2715.030 2651.845       124537
+## 40   GOOGL 1317268    2689.852 2697.570 2681.23 2725.110 2664.370       110974
+## 41   GOOGL 1168490    2689.578 2692.560 2691.43 2705.250 2661.431       103434
+## 42   GOOGL 1230162    2690.150 2720.200 2677.99 2728.790 2660.510       107530
+## 43   GOOGL 1522532    2631.432 2658.550 2638.13 2677.030 2606.750       131108
+## 44   GOOGL 2255647    2555.822 2629.760 2527.57 2634.700 2525.900       213009
+## 45   GOOGL 2021355    2558.680 2525.000 2542.09 2625.000 2513.494       158099
+## 46   GOOGL 1851270    2643.669 2625.000 2668.40 2674.710 2598.010       132417
+## 47   GOOGL 1355070    2640.138 2625.320 2648.59 2665.435 2618.250       113022
+## 48   GOOGL 1576322    2626.392 2669.770 2597.41 2675.910 2592.630       116520
+## 49   GOOGL 1940563    2539.643 2605.000 2519.02 2608.180 2505.500       169621
+## 50   GOOGL 1545976    2566.955 2539.520 2583.96 2597.090 2514.410       122172
+## 51   GOOGL 1778849    2637.309 2614.660 2665.61 2666.660 2574.690       131832
+## 52   GOOGL 1413196    2667.193 2662.980 2676.78 2681.608 2643.700       104280
+## 53   GOOGL 2223345    2696.686 2668.490 2722.51 2724.880 2645.165       128817
+## 54   GOOGL 1341584    2714.662 2723.270 2722.03 2741.000 2681.845       110283
+## 55   GOOGL 1774777    2792.127 2722.030 2797.36 2821.000 2722.030       126456
+## 56   GOOGL 1212670    2775.194 2774.050 2765.51 2791.770 2756.700       100972
+## 57   GOOGL 1314828    2806.827 2784.000 2831.44 2832.375 2755.010        92646
+## 58   GOOGL 1206154    2825.559 2838.320 2833.46 2840.700 2794.750        93037
+## 59   GOOGL 1742463    2823.787 2818.010 2829.11 2840.050 2796.225       112885
+## 60   GOOGL 1715851    2856.825 2852.950 2850.11 2875.870 2840.765       123693
+## 61   GOOGL  994238    2842.137 2849.200 2838.77 2854.406 2832.000        83578
+## 62   GOOGL 1874961    2800.040 2841.060 2781.35 2842.155 2780.490       112935
+## 63   GOOGL 1297072    2794.688 2790.000 2803.01 2809.415 2766.150        90813
+## 64   GOOGL 1298542    2855.003 2807.170 2859.43 2874.240 2806.210        97491
+## 65   GOOGL 1070906    2823.046 2857.380 2811.82 2859.810 2807.650        95221
+## 66   GOOGL 1623424    2739.196 2775.000 2730.96 2787.210 2710.340       144792
+## 67   GOOGL 1311680    2717.970 2720.200 2717.77 2743.290 2684.548       111352
+## 68   GOOGL 1257140    2682.823 2711.670 2665.75 2713.400 2659.310       106431
+## 69   GOOGL 1842753    2596.368 2636.470 2576.47 2641.850 2573.370       170455
+## 70   GOOGL 1635535    2573.906 2632.000 2554.29 2632.000 2535.780       152976
+## 71   GOOGL 1396362    2585.445 2560.000 2597.88 2606.680 2554.825       107359
+## 72   GOOGL 1579899    2553.418 2609.590 2534.60 2609.590 2532.020       138659
+## 73   GOOGL 1040433    2547.162 2540.000 2553.53 2564.250 2523.640       100576
+## 74   GOOGL 1324488    2586.475 2553.830 2600.18 2606.660 2539.990       102794
+## 75   GOOGL 1577273    2576.199 2617.840 2560.80 2627.980 2550.000       131898
+## 76   GOOGL 1822258    2525.101 2585.000 2496.29 2601.970 2490.530       188011
+## 77   GOOGL 2842684    2420.596 2500.000 2392.71 2508.040 2378.500       274346
+## 78   GOOGL 2304693    2432.846 2382.020 2461.48 2465.550 2370.220       173772
+## 79   GOOGL 3643754    2372.912 2445.890 2373.00 2450.200 2370.220       293376
+## 80   GOOGL 4591029    2292.823 2289.385 2285.89 2344.840 2254.730       304175
+## 81   GOOGL 2444232    2339.114 2328.300 2370.45 2392.990 2282.300       162079
+## 82   GOOGL 2133800    2309.742 2334.690 2282.19 2358.395 2276.290       156738
+## 83   GOOGL 1776651    2301.972 2268.100 2331.66 2334.910 2252.000       139070
+## 84   GOOGL 1248368    2345.512 2328.610 2346.68 2368.836 2320.690        96303
+## 85   GOOGL 2495764    2385.657 2340.630 2445.22 2457.090 2302.320       142549
+## 86   GOOGL 2291385    2334.426 2404.080 2330.11 2420.780 2300.115       177901
+## 87   GOOGL 1980479    2316.623 2303.690 2314.93 2351.430 2280.310       141071
+## 88   GOOGL 2040143    2264.735 2265.000 2250.22 2301.542 2240.010       165709
+## 89   GOOGL 1995019    2295.481 2310.150 2287.90 2325.000 2258.010       137067
+## 90   GOOGL 1876737    2286.383 2264.730 2272.05 2327.288 2264.730       128065
+## 91   GOOGL 2691809    2240.816 2227.550 2256.88 2285.900 2196.490       184669
+## 92   GOOGL 1751924    2319.571 2290.660 2321.01 2357.500 2272.100       121920
+## 93   GOOGL 1299522    2293.789 2299.110 2288.90 2323.400 2277.790        97074
+## 94   GOOGL 1152658    2321.028 2336.810 2329.46 2338.000 2297.395        85183
+## 95   GOOGL 1756299    2258.429 2300.000 2237.99 2308.000 2231.110       132775
+## 96   GOOGL 1700120    2224.656 2228.630 2207.68 2260.200 2200.000       123169
+## 97   GOOGL 2448148    2163.565 2239.020 2178.16 2243.670 2115.927       165230
+## 98   GOOGL 1859247    2214.092 2191.750 2229.76 2242.950 2174.820       121005
+## 99   GOOGL 3838989    2090.080 2115.440 2119.40 2129.165 2037.694       252378
+## 100  GOOGL 2012867    2107.895 2099.710 2116.10 2130.000 2077.130       126949
+## 101  GOOGL 1897361    2152.183 2113.540 2155.85 2172.990 2104.497       109716
+## 102  GOOGL 1895706    2230.240 2189.660 2246.33 2246.360 2182.765       115567
+## 103  GOOGL 2490613    2278.789 2254.930 2275.24 2314.700 2241.570       136457
+## 104  GOOGL 1830276    2294.603 2297.100 2277.84 2342.031 2265.000       120997</code></pre>
+<p>Notice that despite the many possible arguments of the function, we
+can simply specify the ticker, start date, and end date and it will
+return the data with reasonable defaults. We can also pull the company
+details using the second function (this time using the actual ticker
+symbol):</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pullDetails</span>(<span class="st">&quot;GOOGL&quot;</span>)</span></code></pre></div>
+<pre><code>##   results.ticker                       results.name results.market results.locale results.primary_exchange
+## 1          GOOGL Alphabet Inc. Class A Common Stock         stocks             us                     XNAS
+##   results.type results.active results.currency_name results.cik results.composite_figi results.share_class_figi
+## 1           CS           TRUE                   usd  0001652044           BBG009S39JX6             BBG009S39JY5
+##   results.market_cap results.phone_number  results.address.address1 results.address.city results.address.state
+## 1        1.55373e+12         650-253-0000 1600 AMPHITHEATRE PARKWAY        MOUNTAIN VIEW                    CA
+##   results.address.postal_code
+## 1                       94043
+##                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          results.description
+## 1 Alphabet Inc is a holding company, with Google, the Internet media giant, as a wholly owned subsidiary. Google generates 99% of Alphabet revenue, of which more than 85% is from online ads. Google&#39;s other revenue is from sales of apps and content on Google Play and YouTube, as well as cloud service fees and other licensing revenue. Sales of hardware such as Chromebooks, the Pixel smartphone, and smart homes products, which include Nest and Google Home, also contribute to other revenue. Alphabet&#39;s moonshot investments are in its other bets segment, where it bets on technology to enhance health (Verily), faster Internet access to homes (Google Fiber), self-driving cars (Waymo), and more. Alphabet&#39;s operating margin has been 25%-30%, with Google at 30% and other bets operating at a loss.
+##   results.sic_code                              results.sic_description results.ticker_root results.ticker_suffix
+## 1             7370 SERVICES-COMPUTER PROGRAMMING, DATA PROCESSING, ETC.                GOOG                     L
+##   results.homepage_url results.total_employees results.list_date results.share_class_shares_outstanding
+## 1  https://www.abc.xyz                  163906        2004-08-19                              300760000
+##   results.weighted_shares_outstanding status                       request_id
+## 1                           658499877     OK e201a90c332880c68820dad85eaa5735</code></pre>
+<p>We could also change some options with the market data we pull. For
+example, we can pull weekly aggregate (adjusted) data about Microsoft
+from all of 2021:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>msft <span class="ot">&lt;-</span> <span class="fu">pullBars</span>(<span class="st">&quot;Microsoft&quot;</span>, <span class="st">&quot;2021-01-01&quot;</span>, <span class="st">&quot;2021-12-31&quot;</span>, <span class="at">timespan =</span> <span class="st">&quot;week&quot;</span>)</span></code></pre></div>
+<pre><code>##  [1] &quot;ticker&quot;       &quot;queryCount&quot;   &quot;resultsCount&quot; &quot;adjusted&quot;     &quot;results.v&quot;    &quot;results.vw&quot;   &quot;results.o&quot;   
+##  [8] &quot;results.c&quot;    &quot;results.h&quot;    &quot;results.l&quot;    &quot;results.t&quot;    &quot;results.n&quot;    &quot;status&quot;       &quot;request_id&quot;  
+## [15] &quot;count&quot;</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>msft</span></code></pre></div>
+<pre><code>##    ticker    volume volWeighted     open  close     high      low transactions
+## 1    MSFT  76300478    223.3648 224.4500 222.42 227.1800 219.6800       791051
+## 2    MSFT 147520111    216.9389 222.5300 219.62 223.0000 211.9400      1594339
+## 3    MSFT 126960294    215.0147 218.4700 212.65 218.9100 212.0300      1275648
+## 4    MSFT 129177135    222.9220 213.7500 225.95 230.0700 212.6300      1283967
+## 5    MSFT 243723031    234.6231 229.1200 231.96 242.6400 224.2200      2758975
+## 6    MSFT 129514486    240.8368 235.0600 242.20 245.0900 232.4300      1478121
+## 7    MSFT 100265726    243.1295 243.1500 244.99 245.9200 240.8100      1056654
+## 8    MSFT  89452259    242.6885 245.0300 240.97 246.1300 240.1800       881153
+## 9    MSFT 170135168    232.5341 237.4200 232.38 237.9300 227.8800      2077270
+## 10   MSFT 168682727    230.8671 235.9000 231.60 237.4700 224.2600      2448378
+## 11   MSFT 150625031    233.7987 231.3700 235.75 239.1700 227.1300      2101379
+## 12   MSFT 164911946    233.6912 234.9600 230.35 240.0550 229.3496      1943563
+## 13   MSFT 146912864    235.6140 230.2700 236.48 241.0500 230.1400      1846070
+## 14   MSFT 123972320    236.2029 236.5900 242.35 242.8400 231.1000      1404537
+## 15   MSFT 130373147    250.5659 242.7600 255.85 255.9900 242.7000      1506538
+## 16   MSFT 124563138    257.9493 254.7100 260.74 261.0000 254.6200      1543702
+## 17   MSFT 114015581    259.1389 260.1900 261.15 261.7800 255.6400      1464692
+## 18   MSFT 168964799    255.1618 261.6600 252.18 263.1900 249.0000      2223055
+## 19   MSFT 127581742    249.4466 253.4000 252.46 254.3500 244.6900      1661264
+## 20   MSFT 153112228    244.7101 250.8700 248.15 251.7300 238.0700      1776359
+## 21   MSFT 114508724    244.6140 246.5500 245.17 248.3300 238.6000      1329014
+## 22   MSFT  99575336    250.6823 247.7850 249.68 252.9400 247.5100      1060908
+## 23   MSFT  93009220    247.8853 251.2300 250.79 251.6500 243.0000       999043
+## 24   MSFT 106985149    254.8513 249.9800 257.89 258.4868 249.8100      1174494
+## 25   MSFT 129115697    259.2211 257.9000 259.43 262.3000 254.4200      1338431
+## 26   MSFT 116146870    264.7156 259.8200 265.02 267.8500 257.9200      1239720
+## 27   MSFT 104258323    271.6284 266.1850 277.65 278.0000 265.9100      1190990
+## 28   MSFT 103108193    277.7930 278.0300 277.94 280.6945 274.3000      1262423
+## 29   MSFT 116956560    280.9168 279.1570 280.75 284.1000 276.5800      1365818
+## 30   MSFT 129711125    281.7096 278.9335 289.67 289.9900 274.4500      1461734
+## 31   MSFT 129365745    286.5566 289.0000 284.91 290.1500 282.9500      1565654
+## 32   MSFT  80817639    286.9369 286.3600 289.46 289.6300 283.7400      1008711
+## 33   MSFT  81509578    288.6485 289.7500 292.85 292.9000 285.2000       957547
+## 34   MSFT 134876629    296.4695 293.1900 304.36 305.8400 288.6400      1550926
+## 35   MSFT 101151298    301.7880 303.2450 299.72 305.6500 296.8300      1226590
+## 36   MSFT  92578490    302.4566 301.1150 301.14 305.1900 300.1800      1098314
+## 37   MSFT  71976514    298.7091 301.0050 295.71 302.1400 295.3800      1087800
+## 38   MSFT 135772647    300.9622 297.5500 299.87 305.3200 294.0800      1523421
+## 39   MSFT 120872685    296.6018 296.3300 299.35 300.9000 289.5200      1635485
+## 40   MSFT 156105387    286.5897 296.1400 289.10 296.4700 281.2900      2070438
+## 41   MSFT 122710419    289.5200 287.4000 294.85 296.6409 280.2500      1694436
+## 42   MSFT 112588007    298.2066 292.9200 304.21 304.4500 292.3500      1391688
+## 43   MSFT  91240936    307.9591 303.5700 309.16 311.0900 302.6900      1220030
+## 44   MSFT 159313433    320.4513 309.3600 331.62 332.0000 306.4600      1935249
+## 45   MSFT 121242671    332.9083 331.3550 336.06 338.7900 326.3700      1643556
+## 46   MSFT 108186069    334.4877 337.3000 336.72 338.7200 329.9200      1372271
+## 47   MSFT 100668957    339.8152 337.5400 343.11 345.1000 334.0340      1269929
+## 48   MSFT 107156474    337.7542 344.6200 329.68 349.6700 328.1200      1422276
+## 49   MSFT 177334367    330.6815 334.9400 323.01 339.2800 318.0300      2380156
+## 50   MSFT 146125331    333.5749 323.9500 342.54 343.0000 319.2300      1929092
+## 51   MSFT 191637792    328.9164 340.6800 323.80 343.7900 317.2500      2344582
+## 52   MSFT  97516470    326.8824 320.0500 334.69 336.3900 317.5700      1364356
+## 53   MSFT  84640440    340.3078 335.4600 336.32 344.3000 335.4300      1196308</code></pre>
+<h3 id="analysis-data">Analysis Data</h3>
+<p>Now that we have written and tested our functions, we are going to
+use them to pull some data for basic exploratory data analysis. We are
+going to pull the weekly aggregate (adjusted) data of Apple, Microsoft,
+Google, and Amazon going from all of 2021, then concatenate them all
+into a single dataset with an added variable called “week” that is
+simply an indicator for what number week it is in the year.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>apple <span class="ot">&lt;-</span> <span class="fu">pullBars</span>(<span class="st">&quot;Apple&quot;</span>, <span class="st">&quot;2021-01-01&quot;</span>, <span class="st">&quot;2021-12-31&quot;</span>, <span class="at">timespan =</span> <span class="st">&quot;week&quot;</span>)</span></code></pre></div>
+<pre><code>##  [1] &quot;ticker&quot;       &quot;queryCount&quot;   &quot;resultsCount&quot; &quot;adjusted&quot;     &quot;results.v&quot;    &quot;results.vw&quot;   &quot;results.o&quot;   
+##  [8] &quot;results.c&quot;    &quot;results.h&quot;    &quot;results.l&quot;    &quot;results.t&quot;    &quot;results.n&quot;    &quot;status&quot;       &quot;request_id&quot;  
+## [15] &quot;count&quot;</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>google <span class="ot">&lt;-</span> <span class="fu">pullBars</span>(<span class="st">&quot;Google&quot;</span>, <span class="st">&quot;2021-01-01&quot;</span>, <span class="st">&quot;2021-12-31&quot;</span>, <span class="at">timespan =</span> <span class="st">&quot;week&quot;</span>)</span></code></pre></div>
+<pre><code>##  [1] &quot;ticker&quot;       &quot;queryCount&quot;   &quot;resultsCount&quot; &quot;adjusted&quot;     &quot;results.v&quot;    &quot;results.vw&quot;   &quot;results.o&quot;   
+##  [8] &quot;results.c&quot;    &quot;results.h&quot;    &quot;results.l&quot;    &quot;results.t&quot;    &quot;results.n&quot;    &quot;status&quot;       &quot;request_id&quot;  
+## [15] &quot;count&quot;</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>amazon <span class="ot">&lt;-</span> <span class="fu">pullBars</span>(<span class="st">&quot;AMZN&quot;</span>, <span class="st">&quot;2021-01-01&quot;</span>, <span class="st">&quot;2021-12-31&quot;</span>, <span class="at">timespan =</span> <span class="st">&quot;week&quot;</span>)</span></code></pre></div>
+<pre><code>##  [1] &quot;ticker&quot;       &quot;queryCount&quot;   &quot;resultsCount&quot; &quot;adjusted&quot;     &quot;results.v&quot;    &quot;results.vw&quot;   &quot;results.o&quot;   
+##  [8] &quot;results.c&quot;    &quot;results.h&quot;    &quot;results.l&quot;    &quot;results.t&quot;    &quot;results.n&quot;    &quot;status&quot;       &quot;request_id&quot;  
+## [15] &quot;count&quot;</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>all <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(apple, google, msft, amazon) <span class="sc">%&gt;%</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">week =</span> <span class="fu">rep</span>(<span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">53</span>), <span class="dv">4</span>))</span></code></pre></div>
+<p>We are also going to derive another variable of interest. We are
+going to subtract the open price from the closing price, then take that
+as a proportion of the weighted average (and multiply that number by 100
+to make the numbers more readable). This will give us a measure of
+growth that is proportional to the overall price of the stock for each
+company.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>final <span class="ot">&lt;-</span> all <span class="sc">%&gt;%</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">growth =</span> <span class="dv">100</span><span class="sc">*</span>(close <span class="sc">-</span> open) <span class="sc">/</span> volWeighted)</span></code></pre></div>
+<h2 id="exploratory-data-analysis">Exploratory Data Analysis</h2>
+<p>For our exploratory data analysis, we are primarily going to look at
+the previously derived <code>growth</code> variable as our response. We
+are going to look at this across the different companies, as well as
+weeks of the year.</p>
+<h3 id="univariate-summaries">Univariate Summaries</h3>
+<p>To start, we will look at some simple summaries of our growth
+variable.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(final<span class="sc">$</span>growth)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+## -9.8734 -1.4395  0.4052  0.5388  2.3506 12.1432</code></pre>
+<p>We can see that our mean is slightly higher that our median, which
+means the data might be a little right skewed. The fact that both
+measures of center are above 0 indicates that, on average, all 4
+companies had positive growth over 2021. To further investigate, we will
+look at a histogram:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>final <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(growth)) <span class="sc">+</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>) <span class="sc">+</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Histogram of Growth Rate&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Growth Rate&quot;</span>) <span class="sc">+</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>It appears that the data is very slightly right skewed, but is pretty
+symmetrical for the most part.</p>
+<h3 id="bivariate-summaries">Bivariate Summaries</h3>
+<p>To start with, we will look at summaries of the growth rate across
+the 4 companies.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>final <span class="sc">%&gt;%</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ticker) <span class="sc">%&gt;%</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Median =</span> <span class="fu">median</span>(growth),</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">Mean =</span> <span class="fu">mean</span>(growth),</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">StD =</span> <span class="fu">sd</span>(growth),</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">Min =</span> <span class="fu">min</span>(growth),</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">Max =</span> <span class="fu">max</span>(growth))</span></code></pre></div>
+<pre><code>## # A tibble: 4 x 6
+##   ticker Median   Mean   StD   Min   Max
+##   &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 AAPL    0.271 0.446   3.31 -7.97  8.78
+## 2 AMZN   -0.126 0.0882  3.36 -9.87  6.07
+## 3 GOOGL   0.549 0.909   3.19 -4.92 12.1 
+## 4 MSFT    0.756 0.712   2.66 -5.13  6.95</code></pre>
+<p>Here, it looks like 3 of the 4 companies had a positive growth rate,
+but Amazon actually had negative median growth rate throughout 2021.
+However, the mean is still above 0 - this would mean that Amazon had
+more negative growth weeks than positive, but overall the positive
+growth weeks slightly outweighed the negative.</p>
+<p>We can also look at the histograms grouped by company (with a
+reference line at 0):</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>final <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(growth, <span class="at">fill =</span> ticker)) <span class="sc">+</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>) <span class="sc">+</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Histograms of Growth Rate by Company&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Growth Rate&quot;</span>) <span class="sc">+</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>ticker)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>Here, it looks like Microsoft and Google clearly had better years
+than Apple and Amazon. It appears that Apple had several very good weeks
+in terms of growth but was largely centered at 0, while Amazon had no
+particularly good weeks but had 1 particularly bad one. On the other
+hand, Google and Microsoft appear to have been very consistently
+high.</p>
+<p>Similarly, we can look at box plots as well:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>final <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> ticker, <span class="at">y =</span> growth)) <span class="sc">+</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Box Plots of Growth Rate by Company&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Growth Rate&quot;</span>) <span class="sc">+</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>Here we can clearly see the few outlying months for Apple (2 of
+positive growth and 1 with negative), as well as several very positive
+months for Google. On the other hand, we can see that Microsoft was just
+consistently high, while Amazon was consistently low (relative to the
+others).</p>
+<h3 id="trivariate-summaries">Trivariate Summaries</h3>
+<p>Instead of looking at simple summaries of the growth rate, we can
+also look at the weighted selling averages across time (i.e. the weeks).
+To start, we will look at a simple line graph of week by weighted
+average, colored by company.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>final <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(week, volWeighted, <span class="at">color =</span> ticker)) <span class="sc">+</span> </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>ticker, <span class="at">scales =</span> <span class="st">&quot;free_y&quot;</span>) <span class="sc">+</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Average Price over Time by Company&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Weighted Average&quot;</span>) <span class="sc">+</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAqAAAAHgCAMAAABNUi8GAAAB41BMVEUAAAAAADoAAGYAOjoAOmYAOpAAZmYAZpAAZrYAv8QZGUgZGXEZSJcZcboaGho6AAA6ADo6AGY6OgA6Ojo6OmY6OpA6ZmY6ZpA6ZrY6kLY6kNtIGRlIGUhIGXFISJdIcZdIcbpIl7pIl91NTU1NTW5NTY5NbqtNjshmAABmADpmAGZmOgBmOjpmOpBmZjpmZmZmZrZmkLZmkNtmtpBmtrZmtttmtv9uTU1uTW5uTY5ubo5ubqtuq+RxGRlxGUhxGXFxSEhxSJdxcUhxcXFxcbpxuv98rgCOTU2OTW6OTY6Obk2ObquOyP+QOgCQOjqQOmaQZgCQZjqQZmaQZpCQkDqQkGaQkLaQtpCQttuQ27aQ2/+XSBmXSEiXSHGXcZeXl3GXupeX3bqX3f+rbk2rbm6rbo6rjk2ryKur5OSr5P+2ZgC2Zjq2Zma2kDq2kGa2tma2tpC2ttu225C229u22/+2/9u2//+6cRm6cUi6unG63Ze6/926///HfP/Ijk3I///bkDrbkGbbtmbbtpDb25Db29vb2//b/7bb/9vb///dl0jdl3Hd/7rd///kq27k///r6+v4dm3/tmb/trb/unH/yI7/25D/27b/3Zf/5Kv//7b//7r//8j//9v//93//+T///+hnQJvAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAgAElEQVR4nO2diZ/exlnHH7sN7NtgbwL0YFNDidN2S4FydR2oU47Wbzi85SbFoVCScni5S3Bom9dZwlEciLvvi71Zr722/lRmRserkWZGczzSjPQ+v0+ykl49emb06OuRNJoDMhIpYUHsDJBIJkHsDJBIJkHsDJBIJkHsDJBIJkHsDJBIJkHsDJBIJkHsDJBIJkHsDJBIJkGogxXsBWfiEIQ++NXyh7P9p+6EOj3dhULnb3X6O93d0u06+/sfBPjA50OzQ/IThDo4AO2ltdZhiVLJekKAHm/nTj4Wmh+SlyDw+OPtHzp3IzQTh+dv8cU7EI6lLGvQtYAyzD/2X1n2H59FuFGQPASBxx+e/+b2TlYyJq7z+58F+OE3OB1bh3D+jewddos893Pc+J1tOPez+xyF0qZ0IgDNDnhZxw/6ZwEWM/+ggF+2FpsffMOYZqESUL483t55Z5vlY7UNH73TdMqcsN+50/yR5XR3p8ga5CvH29xTmbLsixmvyqyWJ8tS/McfFGsNhyQ3Qdjh7MLmEBxv88vAL0Z+T2TF6tn+B7ZZmXhY3b2Lta1sbZNLApQf9N/c56q0aVivyk19mmX2ZEA/wqzOvbKtysLp7ge28828LF0VO872i6xl/ymnXPd1uvuR4uCsOtmz/XJNdkhyFIQdzukQRUSOgiDsHHuh+PftLX6NdsQlFkUOv47nvpq9vw98T2mTq7rFrw966g4zusF+2mlaM4vPcxK4hSbNSjKg7Lh3gO3npWHDKbuT/8ids7/j5B7wzBwUkEu3/nXKsi928FZ+8Ppkme3WHWbbdEhyFIQdzoOfX8TDovQ5Fnd8zlxV+vznP/7eNrtSK8EOv3prm9xL+ZIkikD+Y3FLzvc2rI9zqA6YsSHNXDKgWxw49kPNe+lU/J4nvhKlXpG2BOg6ZdlXfnAOYnmyeUbE4ZJDkqMg6OjiFZdfC37F8/K0hK2go7DZEjiJp8SaTe6mADR/iMxJ4QgVryUN6+L3lbjTatIs1XgGLYFjxVnDaQFQSfxqfeuXAC1Tln0VRociR8XJluexlckOSY6CoKPLoq+4Kx+IAkiGhd3/PvJH//TdXSOg62LPCVBdmpnszQ1QXhJWN+R1ifxvH32jG9D1ydYAlRySHAUhBxfXP7/FHZ77492tip9qb77N74n1W7xcZ6MBtLrFS9a1W7wuzWYGFYA2nOa/5ziu4BfWN+TyLf509/yt+i1eBrR8PlifbB1QySHJTRBy8Kq4egf5u/bn8rcl9irE3oXK2nF2te7w6hl+HWsvSYVN7kcJqHhJOt4VK3Xr9auKNs1M9qYCtOGUFX3sbUy8JDHjWtXuuh50R3pJkgEt37DWJ1sHVHJIchOEHHxQxH3FLyy7fOJqr8q7fnmN8u2n7tSqmSqbXEpAC6O9lvVqXUGkSTOTvakAbTgtaoryfBxC7U2r/JK0lUnVTDKgHygOXp9sHVDZIclJEHDs8brmh1+Aw+Kj5/Fn82/XBR2icvur4hWXV9T/vLispU0uNaDC/PNZy1psfjCvYtekKXtTAio7zevaP/yGfF5C7//udmV4vK6ol59BeY39G/WTlQCVHZJcBEMnOIIKF9f2L4aWJn4OSWvBcEkdb3//nezsIPmL9f5nHV+5uwB1dkhaC4ZLqnhAS/xi8UZQjmW8GVAPh6S1YMC0zn6XvWF8LG0++T8j15Z1ZkA9HJLWgtgZIJFMgtgZIJFMgtgZIJFMgtgZIJFMgtgZIJFMgtgZIJFMgtgZIJFMgtgZIJFMgtgZIJFMgtgZIJFMgtgZIJFMgtgZIJFMgtgZIJFMgtgZIJFMgtgZIJFMgtgZsNHDL75WLU6eu8j0fHZy6a3Y2YqhIgYX2OqbT79176IIxslz19j2NCMCsTNgo3tfer5aiMvALtM0L0en8hh8/Mfeyx7+Sh6Bk4+/dvLc028RoPH0+E/+/FffKxfiMjx+9do0L0eXyhj82mvZyZdEBB6/yu8m37pAgMbTyY++9+a1ciEuAy81Jnk5ulTG4FvXsv/5uojAuz8g/tGWkZmcIHYGLPTu89m9C+Uifwad6uXoUhGDS9/+xOOvfZtH4F5xc3/4q+9NMyIQOwPdevwqI/Lpt4pFeRmmeTk6VMXgO3/6v1/mEXj4Uvl69O7z04wIxM5At9htjb2yXisXmwzoOgb/+mcCyDcviJ/Z2uM/+fokIwKxM9Ctd3khce9CsdhoQNcxuPch/hR+jz2AZkUs8lf5yQliZ6BTj7/G4/7wJRH+h18sy4n8WfRC1KwNrSIUPAYn/L/vvCrqQYt/tO8SoCTS0ILYGSCRTILYGSCRTILYGSCRTILYGSCRTILYGSCRTAIEH0fIdqMwHCqhEccCRYDgY0qxJkA9DPsUWNg8+MW32Z8rlz/JFo9evvyp7zX2TynWBKiHYZ+CbpP7nMxHv34zu/up7z15/Xp299MNgynFmgD1MOxT0Glx+4W/YiXogy98L3v0G2+z//ICta4pxdr7ohxtjHwj5CewsOFEFiWo4JSt5oodqsFkH08qQZEFFjaiyMwfPu9/qg5ooSnFmm7xHoZ9CixsOKAPXryZ3f/k23IJWmhKsSZAPQz7FFjYcECLonOjnkGXtgeFJhRkN+8r5XEBWpSgT16/ujlv8SMBdN5TyuMCNLt/+fILNzerHnQkgBaIbjCgXZoooD58RrrFz/tImQBN3JAAtTXsU4DggwANSyjMjgDtFAEallCY3bz4Q4BqNU1AvfgcHtB5+ZcA1YoADUoozI4A7RYBGpRQmB0B2i0CNCihMDsCtFtTAzRHc1SAsgUBqtXEAF0KNv34JECxBQg+CFC/hFDskAGd19YJ0CQNCzoJUAI0SUMB5gYDWiOUAE3RsHhD8uRz7IDOMwI0bcMCTD2gHX2wYwGazQlQrSYIqPYO39UHe/SA1gglQBM07Li1d/bBJkCRBQg+JgTostNQ1wc7Vo/oeWMZ7K3TkW3McQQIPjYOUEMf7KFL0Kq8QylB59Ufi6SHESD42DhADX2wowEq1WD6eiRAUze0A9TQB5sARRaEHIzy2JOUluqfa+fc0Qd7AoC697TvU4DgYzol6LLbsKMP9qgBnUsLAjQ9QwtAcRIiQG0FCD4IUOeEegD0yJZQAjTUjgC1t+sD0HJJgCZnSIDWlwRoaobL8IsyZkDnjRUCNDVDAlRaIUBTMxw3oLbv8QRoqB0Bam9HgFqIAHVNyMEwBqDFGgGamOHSxWNIQi6GZjup/XsgoPPmKgGamCEBKq8SoIkZjh1QS0IJ0FA7AtTajgC1EQHqmJCLIQEarokAunTyGJCQk2EUQDO3eUP6FCD4IEDdEnIyHAzQeWuDAE3LcPyA6gm1GHKJAE0c0KWbR/+E3AwJ0HARoPzAKJobN2u/d3ebn2s3GvKNkJ8AwcckAF06evROyNEQpQS1GXKJStCkAS2HvCFA11sEaEKGkwZ0Lu2aHqCip+2T16c823E1ZtjGAjpvb44FUDHiYHb7Oh9QQzXiIAHqkJCzodGu9XKuJFQejsEOUD7U8kgAzUcc5MO8MKlGe5kAoOtBFwnQ9S/WPe37FFjYiNFevvCX/BYvj5fVWXUxFmlGvKlkH88JAWo/FESfAgsbAeiV65xO1YiDVILaJ2RvaDV6ghWgjc7EUwU0LzpVIw4SoPYJ2Rt2Aiq/+fQBqHU/0T4FFjZiUOHf0o44OH5Aa+N+jwZQUbVJgAoJIm+LW7xqxEEC1DohB8NuQNlbDB6gqgPHBeijl3UzrxCg1gnZG847AG28+GQWgBp7E48a0C4RoB7HdwHa0Tm9zQ4BqtXYAa1PPTMSQFVPjJodzd7uBGiwHQGaCKApVDQBgg8C1OP4IEDVOKn3EKAEqM/xBKidAMHHyAGVZj+cMqDFqsqjkkQCNA3DFAGd+5R36j0EKAHqc/woAE2AUEDwsVGA8q8Wdy9zXe9xnqT1h3YXnJS7jIA2vzI1PRKg8Q3lCbi7POatt/lKr/PFE6ClAMHHBgGat95m4k26epyrsx9A83UJ0PYnU8kjAdqf4dKy9sitBC2J5CVnj/PFz49MfdNNvdab+8zd3edzs0PVjq4I4QoQfKQIKMOzT0AFlz3OF+9dgrb2zVsbR9J2s1mp7JFK0H4M89LTqg2IzKctoJzNrL/54ufVn8iAxicUEHwkCGjtb4dHP0BvX83UPQinCWjE/nOA4CM5QJfSwuzRC9An3+DlZn/zxQ8IaDbXlpICUAPAgwgQfGweoMWNvY960BqbrXduyUbj0Aio2HICNGu02x9cgOAjVUBt+sI1+Iz/JalWZOkA1VYKqXZ2AqovHwd+X1cLEHykBuiytUKA1raOGvsIUFe7TQZ0XvsOPxCgrlkcVoDgIzFAl4pVhWGrKsotaZccORjOaw+FXoA297Y3NwhQwweNiFoqV5tGS/F/15g3hRxCEmgobvCIgCoK1A0CtNAIS9DyPb9ZgPZWgrZYIEDtBAg+0gJ0qVo/0tt4Ju14vAugmLf4lu2cAA22CzFcyoWieuBkPZ9pAFrf6BHQrvpNAhTdsHXLVgJq4LMvQNu14WpDY62l2qjpkABtKRVA20+USkBNfI4BUMOX8/b+tvGcAA218zRUgqeYXYYANTtqe4wpQPARB9DG3MSK4rO0ahiGJ+1+/JCASgYEaBYN0GXNUINnpphALhKgTRyiAbr+iQD1tLMyXPL/csOlHs9EAFW0WesR0LqFAdDORkoEaIhhCaiRzmxkgCo+U4YBqrIlQEPtbAHNlkcddJaGNY8dB0wCUPNdnAANtbMxbHXqMFsmAGgDCBtA5Q+TOiOFQyOg5bCfBKivnT2gHq/7BCgBGmpnYegyefbEANVx5QpoJ58EaICh0+zuUn1UcNK6Aw3qGB2haajftnSzNlIaW2dHLd8I+QkQfKQOaFUflfUIqOn46p5a64CmMlR8OPcrQY0vQkeqAr3TYywBgo/hAXWc3T0VQOvV9QSonQDBR/KAZstBAVVx1lodBFCl7ZGq1qvTYywBgo/0AVV0RPZN2uL4BADNDC9CBGioXQ+AHrXHcvBM2uJ4xbt4e8MK0HrrTb2RyiEBWtPggJo6a+o8ii9P3RX7yQOqBcsBUEXblW6PkQQIPkYBaLa0+u6E8pKk+GLZ2hgCULWtANSCTwLU29ALUCs++wBUvdUzoIbb+PQALYYY5EOypzHbsR+guIam45VFZmOTALUTdJuU8wbcvXw9U80bMDigFiPa9JW03fGegCqgaQGqB8sFULsBP0cCaDlvwINf+s3ryjFbCdDm8fWrr3tjigyo1o3eYxyBhU0xZutfs9JTHvXa92tuoCzHq0GUfTybgGrrRF0BNc7HoXKovY1PFNC7V/ntXTVvgPJEVG8kG1OC1q6/6rFSl5AB0HmJGxKgVhoVoKzofNIqQQsNDKjVwMn9JG17PBqgeR/M+brSiABVaD3731XbZ1BlpSMBWvvFCdBqt+HWvOGAZnk1k2reAAK0dXyFhvKurUtIB2itaZIDoJbfRA0aI6C29aAEaCavrEWAOgkQfCgBVRCKExnLCeT6SNr6+H4ANdevE6BatU9kmW02oPVCrylnQGsPtKbaofRigSJA8KEGtE0oAVr7yQdQY/VlerFAESD42ChA868Wr19+4aZpIi8DoMVvBKidAMHHoIBKXoe/KHnDhNvik4WqYUIAoGr6rOd5I0C1ap1I1Xx9aTtpe4fDtm9Ejy6GecMEXhucGSeTnUsLWQSoiwDBhxbQJf4NWS6WI93iH3zhL/ktXvqsJn+8n0sL5T7L3+fe/df7km0ocQQIPniWlVMXNNanA+gV8dFX1TChPN7w5dyxBO3KUDPlCIZ9ChB8bB6gedGpaphAgCILEHyIE1FNn9XYQIhM48UrEqCPfkuQaXgGxQM0IncEqKz1G1XqgPK3eNG8q90wgQBFFkhbhwB7h0/dcfRhBNRqymEhi+7uzZqrWIA+elnUNunrQY2tN+fqhAhQlaC+cfDUd3f3zva3HH2EA9pYSRlQ2+MNjeMIUAdBbf10d4/9l63O33LzkZ9Ik7L2pu6El821bsMOjy0RoH0a9imorfcDaHcnYQJ0/bN/htKLBYqgvnHIb/GnuzuOPvAANY/s3Vf7KC/DzuP1rTfVgA7W/n3EgGYrYHLlszwR3fhcBGhDBKiDAMFHIKDtan21YX9t9H0MO4/fNEDffyM7fuZGuVVbDRMg+JAAVWDUUXvUrjadBKD69u+TBLRBZC+Anu5CIbeKpmEA7bOnvYdh9/H6dkhzVUIEqFJQ3zjk7+/sJcm2KrTRzGVZ/VH8rtXSsGXtpGfZx3NTAT3eZi8vnMqzfVG+8dUVW+GbjKrjZ/8AXCuHckFtndcxMa3O33KraSpPpNm8rpS5BFVUm6oMlYMnJl2C6tt5TBBQQST7n5dtnCO2ery9l4mi7vCpO8fbrl9/SkFtPRTQTDezq7F60w5Q9eCeBGgShlwFoOWt/fiZV7Z3srxOnXHFYfUT1DfKW3zm9j2+80Q2FFCtJgxoWbTxW/6eaNwhai79H0lB2hL1oHvZ4Tknd0GAqmql2oaa0ZEJ0CQMuVqA7h2wUq4s6bAA9RMB6nj8hAFd3+Jv8Fvx6ly16eKsJvA8rq7uEzHUv1sBquEz9kXxPn4+PUCLNyP+VsT/50SyG/HZPitCGaVIgPIHBwDn+gBcQLPlRgI63EA1PcXiALYa1UycTr557gZSCXq2v3O2v1e8yzsoBFBlvX7TUMdn9Ivie/wUAe1JUFvnaB6w5wbXJvXIgNZm1jQYWabcm2HQ8QSotaC2zgE93PJtD2qSH6BlpaqWz5QuitOXKUVf9+S6v2vlGyE/QX3jQNDp3CnJIsvaT+x6QNffpUYBqNPxjRJUmqfbN0PpxQJFUN9gD6HsWdetEjQLAlTN3nrMnKXWxjblvgzDjpeml+F4aj/cE6Dhwge03jrfwGeCF8UDUPPQDAToWuwV3ssHOqBHdQMCFDXlMQPqXsGUy+ZEvD+xm/hM8KK4A9oxtg0BWpP7mA1C/oCm9wVzcEC7xl4acSxQBLX1skU9fjUTAdpQBWjn2GAjjgWKAMGH1YmMpA3IQIDmE3TZjF034ligCBB82J3IsvWBiAAlQDsF0lbA4GEWag3tkGAbkGEBtRj8c8SxQBHUN0IGD7Oxqz5ddnzDHPFFcQLUZnDaEccCRVBbDxubycJuzaX4jqnuwOTgMMGL4gKo1eDJI44FiqC23jugeZFZfMRM8wsmAeph2KegvqEZPEyM2frgyuXL9pPJKnXU9Wnd1WGCF8X6eOO8mz4O04uFpNPP3KgWecP4nez42e6iEKQt5eBhYu4qPlnAgxdvquaucgC048ulq8MEL4o9oJazI4w4FpJWn9upFgJMhqo7oCrlc1fd51Tevq6aN4AA9Tl+wwA9+8of/9SdciHAPNvfwwG0mi++PfOKR2vXqCPYeMv+Qjjc4pEdRgd02VJt5/GH7xzslQsBJu8C6giobujaAlA+qYVq7iqXEnQ6hkMlNOJY1HW4k622ykX+DLrn/gx6KA5rKQf00ctXs0w1d9WkYk2Aehh2i3fuhPO3ikUJps8t/gDaLeqLt3j2Dq+cP3VSsSZAPQy7xW7tjK29chEAKNNBsx60nJ4yy2/zIW/x4zcU/zzvXr4sqjb08ySh5SjlWNjrkN+YV1vFIrAEbdXT82vCLwmvCA2rBx2/YTVffMb/tWrni8fLUcKxsNfZb3OmTncFWqefeaUEdLt7tGSob6ju7xaaUqw7DPM6tyffEE/hprk60XKUbiyGEdTW++zy4WKXtKGYTPZlcTcxzBc/ZdmGEkeg+O1vvcZq3hCJB/IXb/JSVFnnRsIVNH843fUcTHxDVN3Tb19X1rmRcAXypqYmlFSpBqiyzo2EK6iti05zvoPdb4o4kfze/uQv3lbWuZFwBdXaoXiFPyBAzSrrQV+4qW57SMIVlCvFKzwBSkpKUK2txOMnAUpKSlBbF5/yCVBSSgJ5c0Vv8aSkBM0fWDFK9aCkZASK3/6PACWlIoidARLJJIidAdJmqOhvzN/BD87fWhVTeIo5Zo3NQmGg/JE2XHl/42c+eic7/ckcSDFjN3/fIUBJ0VX2N/7pG9nx5wSQfMaO42f/YcsW0HL0Wo8BbEmkTMxU0lBtZ9nf+B/2sn/LG9TzURQZmgcdnTuhvlHMF59ORei9ixcvXuAr77KVa9JKsevk0lsxMziwTp7j0Xjz6beyhy9dvMgWJ8+xMFz88Vf534s/8F7s/OlV9Dd+9psfO/vtb3IgV8XN/fSn7lgDWqDpPHhYb7rHLsHjV59nWLLYP3ypvlLu2jBAP/5j7Px/5dJbD1+6JoJRnX7icaj6G//L73/3ZziQOWt87XBntIA+fpWXlSc/+t7DX+bRZ9egWql2JX5hkHVy6ddey06+dOktcdoPv/jaWABd9zf+mz8UQOZtPvja2Vdecb3Fq8cXGV5V0O+JmxeDsloZy4VB1smlb13L/ufr/B9ofj8fSxzW/Y355PHsbz6Mdz4GzrapRARpawUpfYtnBWS+ck88h2ZvXqtWql2JXxhknVz69icef+3b/JzZM/iHXsufQS9kqceh6HbM+xsf8//+ZV+8jRcd5A/tAU1LPOjsCnzotZxLXoKWK9WutC8Mtk4ufedP//fL5TmffHw0t3h/QewMGJQ/aLInLd0zaP0hbCPEzvZf/+x59jf/l/rmBjzqgLTlN8tHb7rHbmLiz7uiYoW/xZcr5a7JXhilOJrinMVb/IhekvwF9Q3PWT76E3/EeppH/l69+vNabVdeEXghai6H04l4f+cw8npQ/gy6UYD6TqJAIvUmqK0ToKTkBPUNzSwfJFI0gbSlnOWDRIoniJ0BEskkqK2n9i2eREIBdKPGBx06oRHHAkVQrR1WDZZ7m+0Y22GCF4UARRbU1htNle+LiQLKEbLkhaQpxZoA9TDsU6DdI6ZO+HQ5U4C8kDWlWBOgHoZ9Cuob+awLtT5JDNJilFZ5IfuYUqwJUA9DG63KZ8dqjORqpdilblgPtfX2V3hWWBbjXMuL8gw2RfbXgQBVi795836coq+c+BZUrZS7ugFtdpd7cOWFm+XsnPLC70TGEGsqQT0Mu3W2L7ogffjO6U9wCnlnuXKl2mVTgjYb07eKTpqrc+iExhOLWUvrfRV8eV8PRlq1Uu3qBlRRA1rNFDDhZ9BZfWPTAV1oDBdNQzeJTnNcq/wp8mCvWql2dQDaGrihuJsXMwXIC1mJxtrOUPqHvvGALuokYgLK4GOv4Odu5FzyErRcqXZZlKCy5JkCJloPOsvkInTjAc0WC5VhIKD50+PpZ27onkHZLmdArZVmrG0M89KTAC21qP2VDAP5ZLd2Pgks/8O7cOZv8eVKucvmLd7vY2eSsbYwrG7usw5DB40a0IW0QAVU1LGLZ8dVvfpzr7ZLPfcx1DfKgRscuyWlGGsLw5libaMBXTRWUAH1FdTW162Z3Bo0JRhrG8OZanWmNrAWAYosqK1vFqBKFGdHalatNV5AFzUIFw3DeHxqxmZy6xufXKytDGeqjY0FdCExKL8spQNoOTbTIX+vsldisbYznKm2ZsxQ8ebkoJEC2iSQby+Omvf8GAIEH2nF2tJwptqsAerH54QAXWQEaG+GLbpahk2LskL0aM2ql8YJaBtAfss/atY7xRCUK2LUBr8x6pOKNdcsm806DFv8FZ+UckBnzeOtNRlAc8Pmw+jwgpCDYzfT1GnG/591WbR+Kn9sH+oQEmzDSIAWhiMHtFBSsc4y1VNk01BRQM7Ej5tZUa8FNN+TDqB+wy8mFessU72HH6kt2j9uJKAaAI+KfTH5RBl+MaVYZ9JnoZnGUP+ESYA2DReLZAD1Hd0upVhn6k9ER1oL36RDj08paEZAEypBpwGosgaeADUZdgAaVVDf8Bx+MaVY2wBqqkLyvigYtQ+RtHAz94lONc2xaNNZta37kXy2D9NbD0hbfsMvJgWosgZ+AEBdj08oaLpbOGIJWk1zLBoksffwjq5ya0G5crrrPahdQrG2AdRYB0+AenjsVjXNseCx3r/DGtDswHui44RirflEVDc0fyMiQD08Fm5aWu+rpjk+26/NMSetaATSlngycIY0oVgr8GsA2vENcwMB1b6ko5ag62mOAc7dyEnbylwBFTLOTKdSOrHWfCKqGXZ9YydAPTx2az3Nsdh6xucWL8SnTR71S1IHoJ1tQAhQD4/dqqY5zrvDH3SNJ7IW1DcOpDf+B1cuX77Oe8dfLpeffDv5fvEqAmeVYXcbJQLUw2O3qmmOxVu830vSoXg2WIsPwfTgRTEMEx9k5PZ1vpb6+KC6j+wEqNZQ/50IF9D8P1EPyp9BPaqZGiOH3eccCiw5qk++IVBNfWwmNYGzwtCikScB6uGxT0G1xh4/W29H+UB2vMhkt3Z+o099fFB1I9CZca+F7ONJgCIL6hvs3V9qycSHCiso5Td7VoomPj6oroicHZn2eiUdenwyQRsToBl/El0/iD56mfMpnkBz3b6e8PigjREpJRGgWkNDU6UkAeW3+uJO/+CKeC/Kbl8td1WjhcpHJBFrM30mev2SDj0+iaBlYwO0/iWp5DN/PeLF6JO/eDvZ8UGxPhARoB4e+xSUK2f7jW/xZQVocUeXRwuVlECs0T4QEaAeHvsUlCujbc1kdfcmQDWGptbyaQEaoMiAxkl6qIQI0HARoD0mRICGK2qs7YYAIUA1hgSohx0B2qdDydDYYZMAxTAkQEMMCVAfOwK0T4cEaLCdi6HlKHQEqNqQAPWxI0D7dFg3NI8ZQoAiGBKgIYZTB9S3eSWivJt4OskhJNiGBGi4qATtMaE+Ae0YFYwADTe0HambAFUZEqB+dgkDel90bTVM/ZwYoI0BPhqGBKifXbqA8rbadz9d9m1VdXFNC1BpiPnWHLFd434SoOGGEW7xDNKiX4Gqe0GKgObTci1aU3ASoFfBTiMAAAtuSURBVJ529obWk8UgJs3KzKJnltRBa5DaBEct1iuLo/Y4oI7jgpayDSWOAMHHJgH64MoLN7Oib6uqi2tSJWhzsk15jtjOkb2pBA01tJ9uCzHpddGp6uKaEqDq6bkI0GA7S8PZrIcy2cKw6tua+jMoAVooDqBO024hGRY39aJvq6qLa0KAqgBcrA275+4gQEMM3abdwjKU+7YmXQ+qBJAAxbCzMVTMjTBU0sMmhAtotpgQoPn4oI2BQRPpF6+c/miYpAdOyNehhr8KUIvZuRIHtBwfVBoYNJHxQdUTyA2S9NAJEaA6FeODygODpjE2k24KzgGSHjwhT4da/ha5oc30hokDysVKUXlg0DTGBx2mEWhN9vEkQJEFpp28HkUeGDSJ8UHX1fNUgmoM9fxNCdBifNCsNjBoEuODEqCdhl2AWk1gnDqg5fiLWcfHk6EBrX3fJEDVhib+FlMBtOBTHhg0hfFBCdAuw1Yb5bo4oHYzwCcOaG2CJPPHk4EBrTcQIUAVhkY8BaB2fKYOqL0GBXRGgJoM2z08Wuq2cE26TwGCjwEBbTSwI0BlQyv2bPkkQJ0NW+0/CVDJEPnRkgB1M1Q0TyZAJUMCVK0hAFWPQ0+A1g2x330IUFtD7SwJBGjNEP3dhwC1NNT3PCJAa4YEqE4EaI8JWdpZVC+5pkyAWhoaum4SoLkWixRjgSJA8NEvoKauxeldlCiASp010VKeAKCDtMUcvPGnQg4hwTa0sJPHY0BLeQKAFuqtBO2c5TC9ixIB0OaQS1gpE6AtNbsaRZiCc3yAtgatw0qZAG1pJnfW7B7YJr2LMjig1ct7erFAESD4wIr1rNHdnQC1sCNAu0WAZgO9MLblOYRiiHwj5CdA8IEIaH1EG4uh6xICtK+EOuzW1fPpxQJFgOADKdaz6i8BamtX+3yUXixQBAg++gHUZuzP9C4KAYosQPCBE+vZekmAWtrVv7+nFwsUAYIPArTHhAjQcOECmuUDJ1uN7p3eRRkUUKkBU3qxQBEg+EABdFZbI0Dt7DYc0GJ8UOUwoZIwYl3/5j47sp2/I72LMiSgcgvQ9GKBItDuKcYHVQ4TKis81nKTkFnEOWIJUA/DPgXaPcX4oMphQmXL4Fg3cbSeXia9izIgoI0m9OnFAkVg3FsMZNcaJrTYjfTtrNXiM4UmoJLs40mAIgtMO/lQYZlqmFDZLDDWSXV3H08Jqp/EGCnl9AEtxgdVDBMq24XFWnE7J0At7AjQYvxF1TChsmFQrBMbj2E0gLY6caYXCxSBdo/MpzxMqCwCtMeECFCdivFB1cOESiJAe0xIY9fuBZ9eLFAECD5CYq2sUCJAO+0IUAcRoD0mpLZTDCOSXixQBAg+CNAeEyJAw0WA4ia06GxFpxqHKb1YoAgQfBCgmAlxPDsayivHCUsvFigCBB8BgKo/um8yoIvaX50dAeomAhQxIQtA1QMtphcLFAGCDwIUL6FFY6mw0wwEml4sUAQIPghQvIQWzRUCNFwEKFpCi9Zay043knJ6sUARhBwc3M4yuYafGjmEJMxw0VolQMPlX4KmN3lH3BJ00V5v2mmHok8vFigCBB9dJ9Ic9rO9x9FhPMPOHoR4gGoGTiZA3dVxIrPpANrdgzAooYVi68hkgpZymGGfAgQf5hOpBlWcAKDdPQgRAW3MjdCsILVxOJBhnwIEH8YTqcZUVNjpOm8mCyiXpgchxrvYwrC5EJsRhgNtyTaUOAIEH6Ysz2p/JwFoRw9CzBJUbB+t1xemApRKUL02CdCuHoQhCbXpW8/PJfYZZ5MjQLUynMisvmzaaYdnSBfQzh6EPQG60FngpBxo2KcAwYcloLNCzX1ODuMadvcgxAWU/XSk22XhcCjDPgUIPvQnUhuybjYr7UpGRwhodw9CZECzxZFuj4XDoQz7FCD4sAJUspvNTHymC2ivCSkpJEARfGhPpMFg3c44PhgBWvt1YTnTdnqxQBHodxWf9Yr7mLyQ5AOoUWMwxE8ouXbIiQNafNYrvufJC1m6E2kWkmOIdY+ALqTCkAC1E2j3FJ/1iroUeSFbEqAWxy8anyoJUDuBcS8rRYvaaHlR7O74JjaW1p7dso+nzrS7pXx6DeXTB5RX9BXf8+SFbEYlaOfx/i3lRxwLFIFhn/isZypBC2lOpPWePoZY9w6oa0v5EccCRaDflX828X8GJUArWbSUJ0DVAu2e4rNe8T1PXsgiQLuOD+jKMeJYoAi0e8rPet71oARoKYuW8gSoRoDggwDtOL4bUP3XohHHAkWA4EN9IuOcvKMPQFU9OeqGxm+ZI44FigDBBwFqPl7VUH5t2PGlfcSxQBEg+CBAzcdrAbVpCDLiWKAIEHwQoMbjlQ3luWHqjZQIUDeHaRnaH68D1IrPMccCRYDgQ3kiI51AbhBA+XPnkR2fY44FigDBBwFqPF7dUt6SzzHHAkWA4IMANR0f+AlzxLFAESD4IEBNxxOgQYKQg01NKKfTGPQorD0oARokQPChOpGxTsFJJaiHYZ8CBB/NE9F1Kh5DrNEBDf3GPuJYoAgQfLQAzWbKXsVjiDUB6mHYpwDBR+NERjjkkodh60CNUhgwEVe+EfITIPggQA3HUwkaJkDwQYDqjw8eUn7EsUARIPggQOXjFR08/BMacSxQBAg+5BMZ4aB1PoaG4wlQRAGCDwK0cXy7F7x/QiOOBYoAwQcB2jieAMUTIPggQJvHt+Ys9k9oxLFAESD4kE5k5OPSEqAehn0KTDv5GCK1Ua81s/8RoO3juyc9IEDtBIZ99zmRYoUxqZ/9jwBtH981LRwBaivQ77r9wl/lozDx0cIMs/+JE7GYu2MUscaqqF9UfwITGnEsUASmnQWKvMhUzf4nfX+e5Q1AJ9UMtJJ9PCvTxcLcK44AtROYduaACiANs/+VJyLPgqTQGGKN+KnT3O2IALUTmHbmgN6v3orUs/9NKtaIgOIYjjgWKALTzhzQ2+XslJrZ/yYVawLUw7BPgWmnQDF/PTLM/jepWBOgHoZ9Ckw7BaDFHV0/+9+kYk2Aehj2KUDwMaVYE6Aehn0KEHxMKdYEqIdhnwIEH1OKNQHqYdinIHYGSCSTIHYGSCSTIHYGSCSTIHYGSCSTIHYGSCSTIHYGSCSTIHYGSCSTIHYGSCSTIHYGSCSTINSBqvWIvx5c4e32cZ3yflTI2dSIYoEvCDxe2YvOW7zl1IMXb+I6vcsuM65HjSgWPQgCj1e2YPbWfR43TbNoXz34pd+8jpxNjSgWPQgCj1f2AQkS84bp9Mk3/vr1Zme/nkSx6EEQeLyyF12IeJt9TKd3r/JbGno2VaJY9CAIPB77n+Ojl6+iOmWunoy1BB1zLNAEgccjP9A8uHId12k+cs/VET6DjjsWaILA45W96LyVXxNkp7zUwPWoTYhigS4IdYBaqVaOVDbSuj+KBb4gdgZIJJMgdgZIJJMgdgZIJJMgdgZIJJMgdgZIJJMgdgZIJJMgdgZGr+NnbsTOwpQFsTMwehGgvQpiZ2D0IkB7FcTOwCh0tr+TZSvYy7KDLbYBcP5WVi45oCvYip3FqQpiZ2AcOnzqTnbwQzsMyr2z/S2xXS4ZoMfbe7EzOFlB7AyMQ8fP3jr7yh8yGp+9teKl5+nuXrk8fuaV7Z3Y+ZuuIHYGxiFWch5/+Ls/cYuVmIcgtFMuj7cBqADtTRA7AyPRwdZq62z/8+xZlN/tucolu78fFKskfEHsDIxEq6d+Zy87/L7PsBeic/lbe7lkz6Cnu3SP70sQOwMj0enuOf6yzorKs332h9FZLvlb/OE5qmrqSRA7A2MRv43nJSWvXuJAFksOqICV1IcgdgZIJJMgdgZIJJMgdgZIJJMgdgZIJJMgdgZIJJMgdgZIJJMgdgZIJJMgdgZIJJMgdgZIJJMgdgZIJJP+H7aHoW0rjLNbAAAAAElFTkSuQmCC" /><!-- --></p>
+<p>When looking at the prices over time, we could easily form a
+different opinion about the Apple stock prices. Clearly, they had a dip
+in the middle of the year but started to rapidly increase towards the
+end of the year. This means that the 2 particularly high values of
+growth rate for Apple were likely at the end of the year, which would be
+much more relevant in predicting the next years growth compared to
+earlier numbers.</p>
+<p>It also appears that Google’s growth might have been plateauing
+somewhat towards the end of the year, but it is hard to say without
+further analysis. Microsoft seems to consistently dip and then continue
+rising, while Amazon seems to be all over the place.</p>
+<p>Because of this trend at the end of the year specifically for Apple
+and Google, we can look at a contingency table of number of transactions
+by week for those two companies as well.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>final <span class="sc">%&gt;%</span> <span class="fu">filter</span>(ticker <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;GOOGL&quot;</span>, <span class="st">&quot;AAPL&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">adjCount =</span> transactions <span class="sc">/</span> <span class="dv">100000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ticker, week) <span class="sc">%&gt;%</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> adjCount) <span class="sc">%&gt;%</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> ticker, <span class="at">values_from =</span> n) <span class="sc">%&gt;%</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">53</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 53 x 3
+##     week  AAPL GOOGL
+##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1     1  28.6  2.21
+##  2     2  47.4  4.00
+##  3     3  34.3  3.00
+##  4     4  28.5  3.78
+##  5     5  60.6  5.21
+##  6     6  35.9  5.81
+##  7     7  27.9  2.89
+##  8     8  32.6  2.55
+##  9     9  61.4  4.46
+## 10    10  59.1  4.39
+## 11    11  51.3  3.95
+## 12    12  43.0  3.79
+## 13    13  35.4  3.74
+## 14    14  25.2  2.98
+## 15    15  31.0  4.20
+## 16    16  30.7  3.45
+## 17    17  30.1  3.72
+## 18    18  35.1  6.32
+## 19    19  35.7  4.37
+## 20    20  38.0  5.13
+## 21    21  26.9  3.48
+## 22    22  23.9  3.00
+## 23    23  19.9  2.61
+## 24    24  22.7  3.13
+## 25    25  28.1  3.51
+## 26    26  22.1  2.90
+## 27    27  22.3  3.04
+## 28    28  28.7  2.70
+## 29    29  33.2  3.01
+## 30    30  29.6  3.44
+## 31    31  29.9  5.40
+## 32    32  20.5  3.06
+## 33    33  20.7  2.71
+## 34    34  30.3  3.44
+## 35    35  20.5  3.41
+## 36    36  27.4  4.00
+## 37    37  28.6  3.11
+## 38    38  34.2  4.05
+## 39    39  30.2  4.20
+## 40    40  32.7  5.27
+## 41    41  28.8  4.45
+## 42    42  24.0  3.80
+## 43    43  23.7  4.48
+## 44    44  29.1  7.36
+## 45    45  23.3  5.36
+## 46    46  21.6  4.14
+## 47    47  31.2  4.12
+## 48    48  27.7  4.03
+## 49    49  51.1  5.95
+## 50    50  41.9  4.39
+## 51    51  52.7  5.78
+## 52    52  26.1  3.79
+## 53    53  27.0  3.29</code></pre>
+<p>Here, we can see that both transaction numbers are highly variable,
+with Google’s being much higher in general. It will be much easier to
+digest this data looking at 2 bar graphs:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>final <span class="sc">%&gt;%</span> <span class="fu">filter</span>(ticker <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;GOOGL&quot;</span>, <span class="st">&quot;AAPL&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">adjCount =</span> transactions <span class="sc">/</span> <span class="dv">100000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> week, <span class="at">y =</span> adjCount, <span class="at">fill =</span> ticker)) <span class="sc">+</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>) <span class="sc">+</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>ticker, <span class="at">scales =</span> <span class="st">&quot;free_y&quot;</span>) <span class="sc">+</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Number of Transactions by Week&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Number of Transactions (in 100,000&#39;s)&quot;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>Here, it definitely does appear that Apple has 2 weeks that stand out
+towards the end of the year, but they are still not as high as some
+weeks early in the year. On the other hand, Google’s transaction numbers
+seems to be highly variable all throughout the year.</p>
+<p>Lastly, we can look at a scatter plot of the opening vs. closing
+prices colored by company. We expect them to be closely correlated, but
+looking at the scatter plot by company may make the patterns a bit more
+clear.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>final <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(open, close, <span class="at">color =</span> ticker)) <span class="sc">+</span> </span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>ticker, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>) <span class="sc">+</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Opening vs. Closing Prices by Company&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Closing Price&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Opening Price&quot;</span>) <span class="sc">+</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>As expected, the two values are very closely correlated. However, the
+patterns do seem to vary a decent bit by company. Apple has the few
+outlier weeks very high for both, while Google seems to have some
+clustering on both ends (that are also a bit more varied). Amazon is
+much more spread out in general, whioe Microsoft appears to be the king
+of consistency.</p>
+
+</body>
+</html>

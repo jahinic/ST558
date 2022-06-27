@@ -1,12 +1,6 @@
 ---
 title: "ST 558 Project 1"
 author: "John Hinic"
-date: '2022-06-26'
-output:
-  pdf_document:
-    toc: true
-    toc_depth: 2
-    df_print: tibble
 editor_options: 
   chunk_output_type: console
 ---
@@ -31,9 +25,9 @@ The API we are going to utilize is [Polygon.io](https://polygon.io/docs/getting-
 
 The following packages (and their purpose) will be required:
 
-- `tidyverse`:
-- `httr`:
-- `jsonlite`: 
+- `tidyverse`: for general data manipulation and plotting
+- `httr`: used to query the API source
+- `jsonlite`: used to parse the JSON data returned from the API
 
 
 ### Basic API Info
@@ -151,13 +145,17 @@ pullBars <- function(
   url <- paste(base2, opts, sep = "?")
   
   # querying data and converting to data frame with only relevant columns
-  GET(url) %>%
+  data <- GET(url) %>%
     content("text", encoding = "UTF-8") %>%
     fromJSON(flatten = TRUE) %>%
-    as.data.frame() %>%
-    select(starts_with("ticker"), queryCount, resultsCount, adjusted, volume = results.v, 
-           volWeighted = results.vw, open = results.o, close = results.c, 
-           high = results.h, low = results.l, transactions = results.n)
+    as.data.frame()
+  data %>% colnames() %>% print()
+
+  final <- data %>%  
+    select(starts_with("ticker"), volume = results.v, volWeighted = results.vw, open = results.o,
+           close = results.c, high = results.h, low = results.l, transactions = results.n)
+  
+  return(final)
 }
 ```
 
@@ -227,18 +225,11 @@ Notice that despite the many possible arguments of the function, we can simply s
 pullDetails("GOOGL")
 ```
 
-Or, we could pull details about Google specifically from the first day of 2022:
-
-```{r details2}
-pullDetails("GOOGL", "2022-01-01")
-```
-
-Because the `results.description` column is empty here, that means there were no details regarding GOOGL from that day.
-
-We could also get a bit more complicated with the market data we pull. For example, we can pull bi-weekly aggregate (un-adjusted) data about Microsoft from the same time frame:
+We could also change some options with the market data we pull. For example, we can pull weekly aggregate (adjusted) data about Microsoft from all of 2021:
 
 ```{r bars2}
-pullBars("Microsoft", "2022-01-01", "2022-06-01", multiplier = 2, timespan = "week", adj = FALSE)
+msft <- pullBars("Microsoft", "2021-01-01", "2021-12-31", timespan = "week")
+msft
 ```
 
 ### Analysis Data
@@ -248,9 +239,8 @@ Now that we have written and tested our functions, we are going to use them to p
 ```{r analysis data}
 apple <- pullBars("Apple", "2021-01-01", "2021-12-31", timespan = "week")
 google <- pullBars("Google", "2021-01-01", "2021-12-31", timespan = "week")
-msft <- pullBars("Microsoft", "2021-01-01", "2021-12-31", timespan = "week")
-amazon <- pullBars("Amazon", "2021-01-01", "2021-12-31", timespan = "week")
-all <- rbind(apple, google, msft, amazon) %>%
+amazon <- pullBars("AMZN", "2021-01-01", "2021-12-31", timespan = "week")
+all <- bind_rows(apple, google, msft, amazon) %>%
   mutate(week = rep(seq(1:53), 4))
 ```
 
@@ -305,7 +295,7 @@ We can also look at the histograms grouped by company (with a reference line at 
 ```{r histogram by company}
 final %>% ggplot(aes(growth, fill = ticker)) +
   geom_histogram(bins = 20) +
-  labs(title = "Histograms of Growth Rate by Company",x = "Growth Rate") +
+  labs(title = "Histograms of Growth Rate by Company", x = "Growth Rate") +
   theme_minimal() +
   geom_vline(xintercept = 0) +
   facet_wrap(~ticker)
