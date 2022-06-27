@@ -155,41 +155,10 @@ pullBars <- function(
     content("text", encoding = "UTF-8") %>%
     fromJSON(flatten = TRUE) %>%
     as.data.frame() %>%
-    select(ticker, queryCount, resultsCount, adjusted, volume = results.v, 
+    select(starts_with("ticker"), queryCount, resultsCount, adjusted, volume = results.v, 
            volWeighted = results.vw, open = results.o, close = results.c, 
            high = results.h, low = results.l, transactions = results.n)
 }
-```
-
-
-```{r testing}
-key <- "meDW5a0CdiQrg_pqfIRI1yanOQ3FwPFu"
-url <- paste0("https://api.polygon.io/v2/aggs/ticker/CS/range/1/day/2021-06-01/2021-07-01?apiKey=", key)
-
-
-url <- "https://api.polygon.io/v3/reference/tickers?type=CS&market=stocks&active=true&sort=ticker&order=asc&limit=100&apiKey=meDW5a0CdiQrg_pqfIRI1yanOQ3FwPFu"
-test <- GET(url) %>%
-  content("text", encoding = "UTF-8") %>%
-  fromJSON(flatten = TRUE) %>%
-  as_tibble()
-View(test)
-
-
-url <- "https://api.polygon.io/v2/aggs/grouped/locale/us/market/stocks/2020-10-14?apiKey=meDW5a0CdiQrg_pqfIRI1yanOQ3FwPFu"
-test <- GET(url) %>%
-  content("text", encoding = "UTF-8") %>%
-  fromJSON(flatten = TRUE) %>%
-  as.data.frame() %>%
-  as_tibble()
-View(test)
-
-url <- "https://api.polygon.io/v1/open-close/AAPL/2020-10-14?adjusted=true&apiKey=meDW5a0CdiQrg_pqfIRI1yanOQ3FwPFu"
-test <- GET(url) %>%
-  content("text", encoding = "UTF-8") %>%
-  fromJSON(flatten = TRUE) %>%
-  as.data.frame() %>%
-  as_tibble()
-View(test)
 ```
 
 With the function to pull the actual market data complete, we will now construct a function that pulls reference data with specific details about the supplied ticker and overall company. This function will be similar to the previous, but have fewer arguments due to the lower level of complexity:
@@ -197,6 +166,8 @@ With the function to pull the actual market data complete, we will now construct
 - ticker (identical to previous function)
 - date (optional, will return information about the supplied ticker on the specific date. Must be in YYYY-MM-DD format)
 - apikey (the user's API key)
+
+This function will return 
 
 ```{r details function}
 pullDetails <- function(
@@ -229,58 +200,86 @@ pullDetails <- function(
   }
   
   # constructing final URL
-  base <- 'https://api.polygon.io/v3/reference/tickers/AAPL?'
-  opts <- paste0(dateOpt, key)
+  base <- 'https://api.polygon.io/v3/reference/tickers/'
+  opts <- paste0(tick, '?', dateOpt, key)
   url <- paste0(base, opts)
   
-  # querying data and converting to data frame with only relevant columns
+  # querying data and converting to data frame
   GET(url) %>%
     content("text", encoding = "UTF-8") %>%
     fromJSON(flatten = TRUE) %>%
-    as.data.frame() %>%
-    as_tibble()
+    as.data.frame()
 }
 ```
 
 
 ### Function Demonstration
 
-Showing the function works on a few different datasets/endpoints and the format of the returned data
+Now that both functions are completed, we will demonstrate some basic usage of them. For instance, we can pull daily aggregate (adjusted) data about Google from the beginning of 2022 until the start of June:
 
-```{r examples}
-
+```{r bars1}
+pullBars("Google", "2022-01-01", "2022-06-01")
 ```
 
+Notice that despite the many possible arguments of the function, we can simply specify the ticker, start date, and end date and it will return the data with reasonable defaults. We can also pull the company details using the second function (this time using the actual ticker symbol):
+
+```{r details1}
+pullDetails("GOOGL")
+```
+
+Or, we could pull details about Google specifically from the first day of 2022:
+
+```{r details2}
+pullDetails("GOOGL", "2022-01-01")
+```
+
+Because the `results.description` column is empty here, that means there were no details regarding GOOGL from that day.
+
+We could also get a bit more complicated with the market data we pull. For example, we can pull bi-weekly aggregate (un-adjusted) data about Microsoft from the same time frame:
+
+```{r bars2}
+pullBars("Microsoft", "2022-01-01", "2022-06-01", multiplier = 2, timespan = "week", adj = FALSE)
+```
 
 ### Analysis Data
 
-Using the function(s) to pull the data for analysis and describing variables
+Now that we have written and tested our functions, we are going to use them to pull some data for basic exploratory data analysis. We are going to pull the weekly aggregate (adjusted) data of Apple, Microsoft, Google, and Amazon going from all of 2021, then concatenate them all into a single dataset with an added variable called "week" that is simply an indicator for what number week it is in the year.
 
-```{r final data}
-
+```{r analysis data}
+apple <- pullBars("Apple", "2021-01-01", "2021-12-31", timespan = "week")
+google <- pullBars("Google", "2021-01-01", "2021-12-31", timespan = "week")
+msft <- pullBars("Microsoft", "2021-01-01", "2021-12-31", timespan = "week")
+amazon <- pullBars("Amazon", "2021-01-01", "2021-12-31", timespan = "week")
+all <- rbind(apple, google, msft, amazon) %>%
+  mutate(week = rep(seq(1:53), 4))
 ```
 
+We are also going to derive another variable of interest. We are going to subtract the open price from the closing price, then take that as a proportion of the weighted average (and multiply that number by 100 to make the numbers more readable). This will give us a measure of growth that is proportional to the overall price of the stock for each company.
+
+```{r final data}
+final <- all %>%
+  mutate(growth = 100*(close - open) / volWeighted)
+```
 
 ## Exploratory Data Analysis
 
-General overview of what our "response" and/or "predictors" are
+For our exploratory data analysis, we are primarily going to look at the previously derived `growth` variable  as our response. We are going to look at this across the different companies, as well as weeks of the year.
 
 ### Univariate Summaries
 
-graphs/summaries/etc.
+To start, we will look at some simple summaries of our growth variable.
 
-```{r}
-
+```{r growth summary}
+summary(final$growth)
 ```
 
-interesting because...
+We can see that our mean is slightly higher that our median, which means the data might be a little right skewed. The fact that both measures of center are above 0 indicates that, on average, all 4 companies had positive growth over 2021. To further investigate, we will look at a histogram:
 
-```{r}
-
+```{r growth hist}
+hist(final$growth, main = "Histogram of Growth", xlab = "Growth Rate")
 ```
 
-insightful because...
-
+It appears that the data is very slightly right skewed, but is roughly symmetrical for the most part.
 
 ### Bivariate Summaries
 
