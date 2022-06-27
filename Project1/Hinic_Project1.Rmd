@@ -276,37 +276,103 @@ summary(final$growth)
 We can see that our mean is slightly higher that our median, which means the data might be a little right skewed. The fact that both measures of center are above 0 indicates that, on average, all 4 companies had positive growth over 2021. To further investigate, we will look at a histogram:
 
 ```{r growth hist}
-hist(final$growth, main = "Histogram of Growth", xlab = "Growth Rate")
+final %>% ggplot(aes(growth)) +
+  geom_histogram(bins = 20) +
+  labs(title = "Histogram of Growth Rate", x = "Growth Rate") +
+  theme_minimal()
 ```
 
-It appears that the data is very slightly right skewed, but is roughly symmetrical for the most part.
+It appears that the data is very slightly right skewed, but is pretty symmetrical for the most part.
 
 ### Bivariate Summaries
 
-contingency table(s), grouped summaries, colored/grouped graphs
+To start with, we will look at summaries of the growth rate across the 4 companies.
 
-```{r}
-
+```{r summary by company}
+final %>%
+  group_by(ticker) %>%
+  summarise(Median = median(growth),
+            Mean = mean(growth),
+            StD = sd(growth),
+            Min = min(growth),
+            Max = max(growth))
 ```
 
-```{r}
+Here, it looks like 3 of the 4 companies had a positive growth rate, but Amazon actually had negative median growth rate throughout 2021. However, the mean is still above 0 - this would mean that Amazon had more negative growth weeks than positive, but overall the positive growth weeks slightly outweighed the negative.
 
+We can also look at the histograms grouped by company (with a reference line at 0):
+
+```{r histogram by company}
+final %>% ggplot(aes(growth, fill = ticker)) +
+  geom_histogram(bins = 20) +
+  labs(title = "Histograms of Growth Rate by Company",x = "Growth Rate") +
+  theme_minimal() +
+  geom_vline(xintercept = 0) +
+  facet_wrap(~ticker)
 ```
 
+Here, it looks like Microsoft and Google clearly had better years than Apple and Amazon. It appears that Apple had several very good weeks in terms of growth but was largely centered at 0, while Amazon had no particularly good weeks but had 1 particularly bad one. On the other hand, Google and Microsoft appear to have been very consistently high.
+
+Similarly, we can look at box plots as well:
+
+```{r boxplot by company}
+final %>% ggplot(aes(x = ticker, y = growth)) +
+  geom_boxplot() +
+  labs(title = "Box Plots of Growth Rate by Company", x = "Growth Rate") +
+  theme_minimal()
+```
+
+Here we can clearly see the few outlying months for Apple (2 of positive growth and 1 with negative), as well as several very positive months for Google. On the other hand, we can see that Microsoft was just consistently high, while Amazon was consistently low (relative to the others).
 
 ### Trivariate Summaries
 
-sicko mode graphs / summaries
+Instead of looking at simple summaries of the growth rate, we can also look at the weighted selling averages across time (i.e. the weeks). To start, we will look at a simple line graph of week by weighted average, colored by company.
 
-```{r}
-
+```{r line plot}
+final %>% ggplot(aes(week, volWeighted, color = ticker)) + 
+  geom_line() +
+  facet_wrap(~ticker, scales = "free_y") +
+  labs(title = "Average Price over Time by Company", y = "Weighted Average") +
+  theme_minimal()
 ```
 
-```{r}
+When looking at the prices over time, we could easily form a different opinion about the Apple stock prices. Clearly, they had a dip in the middle of the year but started to rapidly increase towards the end of the year. This means that the 2 particularly high values of growth rate for Apple were likely at the end of the year, which would be much more relevant in predicting the next years growth compared to earlier numbers.
 
+It also appears that Google's growth might have been plateauing somewhat towards the end of the year, but it is hard to say without further analysis. Microsoft seems to consistently dip and then continue rising, while Amazon seems to be all over the place.
+
+Because of this trend at the end of the year specifically for Apple and Google, we can look at a contingency table of number of transactions by week for those two companies as well.
+
+```{r contingency table}
+final %>% filter(ticker %in% c("GOOGL", "AAPL")) %>%
+  mutate(adjCount = transactions / 100000) %>%
+  group_by(ticker, week) %>%
+  summarise(n = adjCount) %>%
+  pivot_wider(names_from = ticker, values_from = n) %>%
+  print(n = 53)
 ```
 
+Here, we can see that both transaction numbers are highly variable, with Google's being much higher in general. It will be much easier to digest this data looking at 2 bar graphs:
 
-### "Conclusions"
+```{r bar graph}
+final %>% filter(ticker %in% c("GOOGL", "AAPL")) %>%
+  mutate(adjCount = transactions / 100000) %>%
+  ggplot(aes(x = week, y = adjCount, fill = ticker)) +
+  geom_bar(stat="identity") +
+  facet_wrap(~ticker, scales = "free_y") +
+  theme_bw() +
+  labs(title = "Number of Transactions by Week", y = "Number of Transactions (in 100,000's)")
+```
 
-Overall / general findings
+Here, it definitely does appear that Apple has 2 weeks that stand out towards the end of the year, but they are still not as high as some weeks early in the year. On the other hand, Google's transaction numbers seems to be highly variable all throughout the year. 
+
+Lastly, we can look at a scatter plot of the opening vs. closing prices colored by company. We expect them to be closely correlated, but looking at the scatter plot by company may make the patterns a bit more clear.
+
+```{r scatter plot}
+final %>% ggplot(aes(open, close, color = ticker)) + 
+  geom_point() +
+  facet_wrap(~ticker, scales = "free") +
+  labs(title = "Opening vs. Closing Prices by Company", y = "Closing Price", x = "Opening Price") +
+  theme_minimal()
+```
+
+As expected, the two values are very closely correlated. However, the patterns do seem to vary a decent bit by company. Apple has the few outlier weeks very high for both, while Google seems to have some clustering on both ends (that are also a bit more varied). Amazon is much more spread out in general, whioe Microsoft appears to be the king of consistency.
