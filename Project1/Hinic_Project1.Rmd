@@ -14,11 +14,7 @@ editor_options:
 ```{r setup, include=FALSE, warning=FALSE, message=FALSE}
 knitr::opts_chunk$set(include = TRUE, warning = FALSE, message = FALSE)
 library(tidyverse)
-library(parallel)
-library(readxl)
 library(httr)
-library(DBI)
-library(RSQLite)
 library(jsonlite)
 ```
 
@@ -28,7 +24,7 @@ library(jsonlite)
 
 The purpose of this vignette is to give a brief overview of accessing APIs within R, writing custom functions that make the process easier, and performing some basic exploratory data analysis (EDA) on the data we use.
 
-The API we are going to utilize is [polygon.io](https://polygon.io/docs/getting-started), which contains some financial data of various stocks, options, and currencies.
+The API we are going to utilize is [Polygon.io](https://polygon.io/docs/getting-started), which contains some financial data of various stocks, options, and currencies.
 
 
 ### Required Packages
@@ -37,24 +33,58 @@ The following packages (and their purpose) will be required:
 
 - `tidyverse`:
 - `httr`:
+- `jsonlite`: 
 
 
 ### Basic API Info
 
-Endpoints, scope, etc.
+The Polygon.io API contains a plethora of financial data pertaining to the stock markets as well as cryptocurrency. As far as pulling actual market data, there are several possible endpoints in the free version of the API:
 
+- Aggregates (Bars)
+- Grouped Daily (Bars)
+- Daily Open/Close
+- Previous Close
+
+There are also many endpoints for reference data, which give more details to inform queries. These reference endpoints contain things like the tickers themselves, the types of tickers, news about tickers, etc.
+
+It is not feasible to explore the entire API in this vignette, so we will focus on the "Aggregates (Bars)" market data endpoint, as well as the "Ticker Details V3" reference data endpoint.
 
 ## Accessing the API
 
-What function(s) will do
-
+Accessing desired parts of the API essentially boils down to constructing the correct URL. 
 
 ### Writing Function(s)
 
 Format of input, format of output, etc.
 
-```{r functions}
+```{r function}
+key <- "meDW5a0CdiQrg_pqfIRI1yanOQ3FwPFu"
+url <- paste0("https://api.polygon.io/v2/aggs/ticker/CS/range/1/day/2021-06-01/2021-07-01?apiKey=", key)
 
+
+url <- "https://api.polygon.io/v3/reference/tickers?type=CS&market=stocks&active=true&sort=ticker&order=asc&limit=100&apiKey=meDW5a0CdiQrg_pqfIRI1yanOQ3FwPFu"
+test <- GET(url) %>%
+  content("text", encoding = "UTF-8") %>%
+  fromJSON(flatten = TRUE) %>%
+  as_tibble()
+View(test)
+
+
+url <- "https://api.polygon.io/v2/aggs/grouped/locale/us/market/stocks/2020-10-14?apiKey=meDW5a0CdiQrg_pqfIRI1yanOQ3FwPFu"
+test <- GET(url) %>%
+  content("text", encoding = "UTF-8") %>%
+  fromJSON(flatten = TRUE) %>%
+  as.data.frame() %>%
+  as_tibble()
+View(test)
+
+url <- "https://api.polygon.io/v1/open-close/AAPL/2020-10-14?adjusted=true&apiKey=meDW5a0CdiQrg_pqfIRI1yanOQ3FwPFu"
+test <- GET(url) %>%
+  content("text", encoding = "UTF-8") %>%
+  fromJSON(flatten = TRUE) %>%
+  as.data.frame() %>%
+  as_tibble()
+View(test)
 ```
 
 
