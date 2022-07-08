@@ -1,0 +1,415 @@
+---
+title: "ST 558 Homework 8"
+author: "John Hinic"
+date: '2022-06-29'
+output:
+  pdf_document:
+    toc: true
+    toc_depth: 3
+    df_print: tibble
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(include = TRUE, warning = FALSE, message = FALSE)
+library(tidyverse)
+library(GGally)
+library(caret)
+```
+
+# Regression Models in R
+
+## Setup
+
+### Reading Data
+
+First, we'll read in the data we'll be using and rename the columns so they're easier to work with. We will also create a binary indicator for when the number of bikes rented were over 700, whether it rained/snowed or not, as well as a factor version of the `hour` variable.
+
+```{r reading data}
+bikes <- read_csv("SeoulBikeData.csv", locale = locale(encoding="latin1"))
+colnames(bikes) <- c(
+  "date", "numBikes", "hour", "temp", "humidity", "wind", "visibility", 
+  "dewPoint", "solar", "rain", "snow", "season", "holiday", "funcDay"
+)
+head(bikes)
+bikes <- bikes %>% mutate(
+  bikes700 = if_else(numBikes >= 700, 1, 0),
+  hourFact = as.factor(hour),
+  rainInd = if_else(rain > 0, 1, 0),
+  snowInd = if_else(snow > 0, 1, 0),
+  precipInd = if_else((rain > 0) | (snow > 0), 1, 0)
+)
+```
+
+
+
+### Splitting Data
+
+With the data read in, we now want to split the data into a training set (75%) and test set (25%).
+
+```{r data split}
+set.seed(9001)
+trainIndex <- createDataPartition(bikes$numBikes, p = 0.75, list = FALSE)
+train <- bikes[trainIndex, ]
+test <- bikes[-trainIndex, ]
+```
+
+## EDA
+
+With the data read in and split into training and test sets, we will now perform some basic EDA on the training set, with our primary variable of interest being `numBikes`, the number of bikes rented in a given hour.
+
+### Univariate
+
+To start, we will look at a basic numeric summary and histogram of the number of bikes rented.
+
+```{r univariate}
+summary <- summary(train$numBikes)
+summary
+train %>% ggplot(aes(numBikes)) +
+  geom_histogram() +
+  geom_freqpoly(color = "blue") +
+  geom_vline(xintercept = summary[4], color = "red", linetype = 2) +
+  theme_bw() +
+  labs(title = "Histogram of Bike Rentals", x = "Number of Bikes")
+```
+
+Starting with the numeric summary, we can see that the data ranges from 0 up to 3418, with a median of 504.5 and mean 706.9. This indicates the data is likely right skewed, which is confirmed by the histogram (where the vertical red line is the mean, for reference).
+
+### Bivariate
+
+First, we'll look at a correlation matrix of all numeric variables just to see if we might have any multicollinearity issues.
+
+```{r correlations}
+train %>% select(where(is.numeric)) %>%
+  cor() %>%
+  round(digits = 3)
+```
+
+At first glance there only seems to be one particularly concerning correlation, between temperature and dew point. This correlation is very high, which may present an issue for some models. Based on context it seems like the temperature will be the more impactful one if we have to choose, but we will consider this later with our model selection. We can also see that humidity has some fairly strong correlations with visibility, dew point, and solar radiation, but none as extreme as temperature and dew point.
+
+We can also look at a pairwise grid of the variables that seem like they would be related to bike rentals - hour, temperature, rain, and snow.
+
+```{r pairwise}
+g <- train %>% select(numBikes, hour, temp, rain, snow) %>%
+  ggpairs()
+g
+```
+
+Looking first at the numeric correlations, we can see that all 4 of the variables seem to have some level of relationship with the number of bikes rented, with the hour and temperature being the strongest. This makes sense, as the time of day will certainly have an effect (I doubt many people are renting bikes around midnight), as would the weather. We can see that the temperature correlation is positive, which means that more people tend to rent bikes as the temperature goes up. It also makes sense that the correlation with rain/snow is negative, as less people would be likely rent bikes when there is inclement weather.
+
+Considering the scatter plot between hour and number of bikes, we can see an interesting trend. It appears there is a large spike at 8am, which would be around the time most people's workdays start. Then it falls off a cliff, and slowly climbs back up until it peaks at 5pm, which is when the workday would end for most people, and gradually goes back down.
+
+Looking at the scatter plots of bikes rented by rain and snow, it appears that a binary indicator may be a sufficient predictor instead of the *amount* of rain/snow. This is because the points on the scatter plots are clustered very tightly around the x and y axes; it seems that if it rains or snows at all, the actual amount of rain/snow does not have a huge effect. This will be something we consider when constructing our models.
+
+We can now consider summaries of the number of bikes rented across different levels of the categorical variables - season, holiday, and functional day.
+
+```{r seasons}
+train %>% group_by(season) %>%
+  summarise(Mean = mean(numBikes), SD = sd(numBikes), Median = median(numBikes), Q1 = quantile(numBikes, 0.25), Q3 = quantile(numBikes, 0.75))
+
+train %>% ggplot(aes(numBikes, ..ndensity..)) +
+  geom_histogram(aes(fill = season)) +
+  geom_density(color = "blue") +
+  geom_vline(xintercept = mean(train$numBikes), linetype = 2) +
+  theme_bw() +
+  labs(title = "Histogram of Bike Rentals by Season", x = "Number of Bikes") +
+  facet_wrap(~season)
+
+train %>% ggplot(aes(numBikes, season, fill = season)) +
+  geom_boxplot() +
+  theme_bw()
+```
+
+Here, we can see that the average number of bikes rented is highest in the summer and lowest in the winter, which is as expected. However, we can also see that the standard deviation is much smaller than the other months in winter. Part of this is likely due to the smaller scale, but it may also indicate that the people renting bikes in winter are very consistent, while more people may do it occasionally in the other months.
+
+We can also see that while the summer and spring months are clearly right skewed, the distribution in autumn appears as if it is bi-modal. Perhaps there are specific events in that season that lead to a spike in bike rentals, but it is hard to say without more data.
+
+
+### Trivariate
+
+We can also look at the histograms across levels of holidays and functional days.
+
+```{r functional and holiday}
+train %>% ggplot(aes(numBikes, y = ..ndensity..)) +
+  geom_histogram() +
+  geom_density(color = "blue") +
+  geom_vline(xintercept = mean(train$numBikes), color = "red", linetype = 2) +
+  theme_bw() +
+  labs(title = "Histogram of Bike Rentals by Holiday and Functional Day", x = "Number of Bikes", y = "Normalized Density") +
+  facet_grid(holiday~funcDay)
+```
+
+Here, it seems like there are a bit more bike rentals on non-holidays, but they follow a similar distribution. We can also see that on non-functional days, there are no bike rentals 100% of the time - that means a "non-functional day" probably indicates that bike rentals were not offered at all.
+
+Lastly, we will look at histograms across the different levels of season and holiday.
+
+```{r season and holiday}
+train %>% ggplot(aes(numBikes, y = ..ndensity..)) +
+  geom_histogram(bins = 20) +
+  geom_density(color = "blue") +
+  geom_vline(xintercept = mean(train$numBikes), color = "red", linetype = 2) +
+  theme_bw() +
+  labs(title = "Histogram of Bike Rentals by Season", x = "Number of Bikes", y = "Normalized Density") +
+  facet_grid(season~holiday)
+```
+
+Based on these plots, it seems that the season effect is mostly consistent across holidays for winter and autumn, but slightly different for spring and summer. Those distributions almost look as if they become bi-modal on holidays, similar to autumn. Perhaps there are a few holidays, and there is a significant effect for some of them but not others.
+
+
+## MLR Models
+
+Now, we are going to fit several multiple linear regression models and evaluate their performance using 5-fold cross-validation and their RMSE on the test set.
+
+First, we will define the cross-validation methodology that every model will use. Note that we will also center and scale all of our numeric variables for each model as well. We will also be excluding the `date` variable for all models.
+
+```{r mlr control}
+control <- trainControl(method = "cv", number = 5)
+train2 <- train %>% select(-date)
+```
+
+### MLR Model 1
+
+The first model we are going to fit will be very simple, a complete first-order model. It is very unlikely that this optimal is the best, but will serve as a decent "baseline" to compare the others to.
+
+```{r}
+mlr1 <- train(
+  numBikes ~ .,
+  data = select(train2, -(bikes700:precipInd)),
+  method = "lm",
+  preProcess = c("center", "scale"),
+  trControl = control
+)
+evalMLR <- function(fit) {round(t(fit$results[, -1]), 3)}
+mlr1Stats <- evalMLR(mlr1)
+mlr1Stats
+summary(mlr1)
+car::vif(mlr1$finalModel)
+```
+
+Although we can see the fit statistics based on the cross-validation, these statistics mean very little on their own. Based on the model summary, we can see that nearly every predictor single predictor is significant, the only one not being the visibility. Recall that dew point and temperature were very highly correlated - we can see that both terms have very large coefficients, but also very high standard errors. Looking at the variance inflation factors, we can see that the VIF's for temperature and dew point are both massive, and the VIF of humidity is quite high as well. Clearly, this model has significant issues.
+
+### MLR Model 2
+
+The second model we are going to look at will include all main effects as well as their interactions, but no polynomial terms.
+
+```{r}
+mlr2 <- train(
+  numBikes ~ .^2,
+  data = select(train2, -(bikes700:precipInd)),
+  method = "lm",
+  preProcess = c("center", "scale"),
+  trControl = control
+)
+mlr2Stats <- evalMLR(mlr2)
+mlr2Stats
+summary(mlr2)
+```
+
+We can see that the RMSE is much lower in this model than the previous, but this is still certainly not the best model we could have. We have some coefficients with standard errors over 2000, which is clearly not acceptable. Still, seeing some of the interactions that turned out significant is interesting. For instance, the coefficient of temperature is positive, and the interaction of temperature with most seasons is positive. However, the interaction of temperature with summer is actually *negative*. This would imply that outside of summer, a higher temperature means nicer weather. But when it's summertime, the higher temperature days are actually *worse* weather.
+
+### MLR Model 3
+
+The next model we'll consider will be a bit less naive in its approach. Due to the large spikes in number of bikes rented around the hours of 9am and 5pm, it is very difficult to consider the "quantitative" effect of hour on our response. Thus, we will consider it as a categorical variable instead. We will also include the temperature, but not the dew point due to their high collinearity. Instead of considering the actual amount of rain and snow, we will consider whether it rained or snowed at all (a binary indicator), as well as the humidity and solar radiation. We will also keep the season, holiday, and function day effects in the model.
+
+As for interactions, we will only consider temperature by season and humidity by season.
+
+```{r}
+mlr3 <- train(
+  numBikes ~ temp + temp*season + humidity + humidity*season + solar + precipInd + season + holiday + funcDay + hourFact,
+  data = train2,
+  method = "lm",
+  preProcess = c("center", "scale"),
+  trControl = control
+)
+mlr3Stats <- evalMLR(mlr3)
+mlr3Stats
+summary(mlr3)
+```
+
+We can see that basically every term in this model is significant, and the performance is even slightly better than the previous one despite not having nearly as many parameters.
+
+### MLR Model 4
+
+To expand on the previous model, we will consider a nearly complete second order version of it, then perform stepwise selection based on the AIC.
+
+```{r cache=TRUE}
+mlr4 <- train(
+  numBikes ~ polym(temp, humidity, solar, degree = 2, raw = TRUE) + precipInd + season + holiday + funcDay + hourFact + temp:season + humidity:season + solar:season + season:holiday,
+  data = train2,
+  method = "lmStepAIC",
+  preProcess = c("center", "scale"),
+  trControl = control
+)
+mlr4Stats <- evalMLR(mlr4)
+mlr4Stats
+summary(mlr4)
+```
+
+Here, we can see that we get a relatively significant increase in performance based on the RMSE, dropping from around 355 to 336. This is certainly our most promising model thus far.
+
+### MLR Model 5
+
+For our final linear regression model, we will consider similar predictors to the previous model. However, instead of using the precipitation indicator, we will use the numeric measurements of rain and snow instead, which will increase the number of numeric interactions we consider.
+
+```{r cache=TRUE}
+mlr5 <- train(
+  numBikes ~ polym(temp, humidity, solar, rain, snow, degree = 2, raw = TRUE) + season + holiday + funcDay + hourFact + temp:season + humidity:season + solar:season + rain:season + season:holiday,
+  data = train2,
+  method = "lmStepAIC",
+  preProcess = c("center", "scale"),
+  trControl = control
+)
+mlr5Stats <- evalMLR(mlr5)
+mlr5Stats
+summary(mlr5)
+```
+
+Here, we can see that our RMSE increased very slightly over the previous model, so we can conclude that the binary indicator of rain/snow is likely preferred over the numeric measures. Thus, we have our final model, with all of the fit statistics as follows:
+
+```{r}
+stats <- cbind(mlr1Stats, mlr2Stats, mlr3Stats, mlr4Stats, mlr5Stats)
+colnames(stats) <- c('mlr1', 'mlr2', 'mlr3', 'mlr4', 'mlr5')
+stats
+```
+
+
+### Final Model Evaluation
+
+We can now evaluate our final model on the test set, as well as the second best model for comparison sake.
+
+```{r}
+pred1 <- predict(mlr4, newdata = test)
+postResample(pred1, obs = test$numBikes)
+
+pred2 <- predict(mlr5, newdata = test)
+postResample(pred2, obs = test$numBikes)
+```
+
+We can see that both of these models actually performed even better on the test set than they did on the cross-validation of the training set, and that the same model is preferred in both cases.
+
+
+## Logistic Regression Models
+
+We will now construct some logistic regression models to predict whether 700 or more bikes were rented in a given hour. We will follow a similar process as the MLR models, because we are predicting a "similar" outcome (i.e., the relationship between the binary indicator and number of bikes rented is completely deterministic). We will use the same 5-fold CV for evaluation, but using the accuracy as our criteria instead of RMSE.
+
+```{r logistic control}
+control <- trainControl(method = "cv", number = 5)
+evalLog <- function(fit) {
+  stats <- round(t(fit$results[, -1]), 3)
+  print(stats)
+  print(confusionMatrix(fit))
+  
+  return(stats)
+}
+```
+
+### Logistic Model 1
+
+To start, we will fit a complete first-order model with all of the predictors provided in the dataset (i.e., no transformed variables).
+
+```{r}
+log1 <- train(
+  as.factor(bikes700) ~ .,
+  data = select(train2, hour:bikes700),
+  method = "glm",
+  preProcess = c("center", "scale"),
+  trControl = control
+)
+log1Stats <- evalLog(log1)
+summary(log1)
+```
+
+We can see that this model already seems to perform pretty well, with an accuracy of 86.05%. Based on the confusion matrix, it also appears that we are not systematically predicting incorrectly one way or another.
+
+### Logistic Model 2
+
+For the second logistic regression model, we will include all main effects and their interactions.
+
+```{r}
+log2 <- train(
+  as.factor(bikes700) ~ .^2,
+  data = select(train2, hour:bikes700),
+  method = "glm",
+  preProcess = c("center", "scale"),
+  trControl = control
+)
+log2Stats <- evalLog(log2)
+summary(log2)
+```
+
+Here, we can see that literally every possible term in the model is "significant," yet we can see that the performance of this model is still lower than the first. Clearly, simply throwing everything into the model is not a very effective strategy.
+
+### Logistic Model 3
+
+For the third logistic model, we will use the same terms as the third MLR model.
+
+```{r}
+log3 <- train(
+  as.factor(bikes700) ~ temp + temp*season + humidity + humidity*season + solar + precipInd + season + holiday + funcDay + hourFact,
+  data = train2,
+  method = "glm",
+  preProcess = c("center", "scale"),
+  trControl = control
+)
+log3Stats <- evalLog(log3)
+summary(log3)
+```
+
+Our model performance has improved a relatively sizeable amount now, with our accuracy increasing by over 4% compared to both the previous models.
+
+### Logistic Model 4
+
+Again, the predictors used in this model will be the same as the 4th MLR model. We will use stepwise selection and the AIC to select a model.
+
+```{r cache=TRUE}
+log4 <- train(
+  as.factor(bikes700) ~ polym(temp, humidity, solar, degree = 2, raw = TRUE) + precipInd + season + holiday + funcDay + hourFact + temp:season + humidity:season + solar:season + season:holiday,
+  data = train2,
+  method = "glmStepAIC",
+  preProcess = c("center", "scale"),
+  trControl = control
+)
+log4Stats <- evalLog(log4)
+summary(log4)
+```
+
+Our model performance has slightly improved again, with an accuracy of 91.71%. Interestingly, based on the confusion matrix, it seems that it is more common for the model to incorrectly predict 700 bikes or more than the other way around. Still, this is our most accurate model so far.
+
+### Logistic Model 5
+
+For the final logistic model, the selection process will be identical to the final MLR model and similar to the previous logistic model.
+
+```{r cache=TRUE}
+log5 <- train(
+  as.factor(bikes700) ~ polym(temp, humidity, solar, rain, snow, degree = 2, raw = TRUE) + season + holiday + funcDay + hourFact + temp:season + humidity:season + solar:season + rain:season + season:holiday,
+  data = train2,
+  method = "glmStepAIC",
+  preProcess = c("center", "scale"),
+  trControl = control
+)
+log5Stats <- evalLog(log5)
+summary(log5)
+```
+
+Here, we see that the accuracy of this model is 91.68%, which is basically identical to the previous model (only 0.03% lower). Considering the two models are basically identical in terms of the cross-validation accuracy, choosing one of the 2 should be based more on context and intuition than the minuscule numeric difference. Personally, I think the 4th model makes a bit more sense intuitively, so that will be the "final" logistic model. The following is a table comparing the fit statistics of all 5 logistic models:
+
+```{r}
+stats2 <- cbind(log1Stats, log2Stats, log3Stats, log4Stats, log5Stats)
+colnames(stats2) <- c('log1', 'log2', 'log3', 'log4', 'log5')
+stats2
+```
+
+### Final Model Evaluation
+
+Although we already decided which model will be our final one, we will evaluate both the 4th and 5th logistic regression models on the test set for comparison.
+
+```{r}
+logPred1 <- predict(log4, newdata = test)
+postResample(logPred1, obs = as.factor(test$bikes700))
+
+logPred2 <- predict(log5, newdata = test)
+postResample(logPred2, obs = as.factor(test$bikes700))
+```
+
+We can see that, once again, both of our models actually performed better on the test set than they did in the 5-fold cross-validation. In this case, the model with quantitative variables for rain/snow actually performed ever so slightly better than the one with an indicator for any precipitation, which is the reverse of their performance on the training set. However, the differences are still so minuscule that it is not something that should be the deciding factor.

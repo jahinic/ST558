@@ -1,0 +1,201 @@
+---
+title: "ST 558 Homework 9"
+author: "John Hinic"
+date: '2022-07-07'
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+    theme: readable
+    code_folding: show
+    df_print: tibble
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(include = TRUE, warning = FALSE, message = FALSE)
+library(tidyverse)
+library(caret)
+```
+
+# Nonlinear Models in R
+
+## Loading Data
+
+First, we will read in the data and apply any necessary transformations. We will also split the data into a training set (80%) and test set (20%).
+
+```{r data}
+heart <- read_csv("heart.csv", col_types = 'nffnnnfnfn-f')
+colnames(heart) <- c('age', 'sex', 'painType', 'restingBP', 'chol', 'fastingBS', 'restingECG', 'maxHR', 'exerciseAngina',
+'oldPeak', 'heartDisease')
+
+dummies <- dummyVars(heartDisease ~ sex + painType + restingECG, data = heart)
+predMatrix <- predict(dummies, newdata = heart)
+heartNew <- heart %>% 
+  select(-sex, -painType, -restingECG, -exerciseAngina) %>%
+  cbind(predMatrix)
+
+set.seed(9001)
+trainIndex <- createDataPartition(heartNew$heartDisease, p = 0.8, list = FALSE)
+train <- heartNew[trainIndex, ]
+test <- heartNew[-trainIndex, ]
+```
+
+
+## Part 1: K-Nearest Neighbors
+
+Now, we are going to fit a model using kNN to predict whether or not someone has heart disease. We are going to consider k values ranging from 1-40, using 3-time repeated 10-fold cross-validation to determine our optimal model.
+
+```{r kNN training}
+controlKNN <- trainControl(method = "repeatedcv", number = 10, repeats = 3)
+
+set.seed(1262)
+knn <- train(
+  heartDisease ~ .,
+  data = train,
+  method = "knn",
+  preProcess = c("center", "scale"),
+  trControl = controlKNN,
+  tuneGrid = data.frame(k = 1:40)
+)
+knn
+```
+
+We can see that the optimal kNN model uses k = 23, with an accuracy of 81.77% on the training set. Now we will see how it performs on the test set.
+
+```{r kNN testing}
+predKNN <- predict(knn, newdata = test)
+confusionMatrix(predKNN, reference = test$heartDisease)
+```
+
+Now we can see that the our final kNN model had an accuracy of 77.6% on the test set, which is slightly worse than on the training set.
+
+## Part 2: Ensemble Methods
+
+Now, we are going to see how several ensemble methods perform in comparison to the kNN model. The methods considered will be a standard classification tree, a bagged tree, random forest, and boosted tree model.
+
+We will still use repeated CV for the ensemble methods, but only using 5 folds instead of 10.
+
+```{r tree-based control}
+controlTrees <- trainControl(method = "repeatedcv", number = 5, repeats = 3)
+```
+
+
+### Classification Tree
+
+First up is the classification tree, considering `cp` values from 0 to 0.1.
+
+```{r rpart training}
+set.seed(198719)
+class <- train(
+  heartDisease ~ .,
+  data = train,
+  method = "rpart",
+  preProcess = c("center", "scale"),
+  trControl = controlTrees,
+  tuneGrid = data.frame(cp = seq(0, 0.1, by = 0.001))
+)
+class
+```
+
+For our decision tree, the accuracy of the optimal model on the training set was 78.33%, which is slightly better than the kNN model performed on the training set. The optimal `cp` value was 0.007. Now we will see how it performs on the test set.
+
+```{r rpart testing}
+predClass <- predict(class, newdata = test)
+confusionMatrix(predClass, reference = test$heartDisease)
+```
+
+For this tree, the performance actually improved from the training to the test set, with an accuracy of 79.78%. This is a relatively decent improvement over the kNN model.
+
+### Bagged Tree
+
+The next model we will consider is a bagged tree model, which has no tuning parameters.
+
+```{r bagged training}
+set.seed(681453)
+bagged <- train(
+  heartDisease ~ .,
+  data = train,
+  method = "treebag",
+  preProcess = c("center", "scale"),
+  trControl = controlTrees
+)
+bagged
+```
+
+Here, we can see that our bagged model has an accuracy of 78.37% on the training set. Now we will check its performance on the test set.
+
+```{r bagged testing}
+predBagged <- predict(bagged, newdata = test)
+confusionMatrix(predBagged, reference = test$heartDisease)
+```
+
+The bagged model has an accuracy of 79.23% on the test set, which is again a very slight improvement to its performance on the training set. However, this is actually slightly worse than the performance of the previous classification tree.
+
+### Random Forest
+
+We will now consider a random forest model, with `mtry` ranging from 1 to 15.
+
+```{r forest training}
+set.seed(7259)
+forest <- train(
+  heartDisease ~ .,
+  data = train,
+  method = "rf",
+  preProcess = c("center", "scale"),
+  trControl = controlTrees,
+  tuneGrid = data.frame(mtry = 1:15)
+)
+forest
+```
+
+The random forest model is optimized with an `mtry` value of 3, with an accuracy of 81.37% on the training set. Now we will check its performance on the test set.
+
+```{r forest testing}
+predForest <- predict(forest, newdata = test)
+confusionMatrix(predForest, reference = test$heartDisease)
+```
+
+Here, we can see that the random forest model has the best performance thus far on the test set, with an accuracy of 79.78%. This is a bit worse than its performance on the training set, and a minor improvement over the bagged tree model. However, it is actually the same accuracy as the first decision tree.
+
+### Boosted Tree
+
+Lastly, we will fit a boosted tree model, which has several tuning parameters we will consider:
+
+- `n.trees`: 25, 50, 100, 150, 200
+- `interaction.depth`: 1, 2, 3, 4
+- `shrinkage`: 0.1
+- `n.minobsinnode`: 10
+
+For our model, we will consider all combinations of the `n.trees` and `interaction.depth` parameters, keeping the `shrinkage` and `n.minobsinnode` constant.
+
+```{r boosted training}
+n.trees <- c(25, 50, 100, 150, 200)
+interaction.depth <- c(1, 2, 3, 4)
+shrinkage <- 0.1
+n.minobsinnode <- 10
+tuning <- expand.grid(n.trees, interaction.depth, shrinkage, n.minobsinnode)
+colnames(tuning) <- c('n.trees', 'interaction.depth', 'shrinkage', 'n.minobsinnode')
+
+set.seed(71954)
+boosted <- train(
+  heartDisease ~ .,
+  data = train,
+  method = "gbm",
+  preProcess = c("center", "scale"),
+  trControl = controlTrees,
+  tuneGrid = tuning,
+  verbose = FALSE
+)
+boosted
+```
+
+Here, we can see that our optimal boosted tree model had an `interaction.depth` of 1 and `n.trees` of 150, and an accuracy of 82.36% on the test set. We will now check its performance on the test set.
+
+```{r boosted testing}
+predBoosted <- predict(boosted, newdata = test)
+confusionMatrix(predBoosted, reference = test$heartDisease)
+```
+
+The boosted tree model correctly predicted the heart disease outcome 80.87% of the time on the test set, which is slightly better than the previous models. Thus, the boosted tree model is our best performing model between all the methods we considered.
