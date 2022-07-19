@@ -1,11 +1,17 @@
+###############################################################################
+## Author:  John Hinic
+## Date:    07Jul2022
+## Purpose: ST 558 HW 10 server script
+###############################################################################
+
 library(shiny)
 library(caret)
 library(tidyverse)
 library(DT)
 data("GermanCredit")
 
-
 shinyServer(function(input, output) {
+  # creating plot based on user selected grouping variable
   output$plot <- renderPlot({
     if(input$plotType == 'Just Classification'){
       GermanCredit %>% ggplot(aes(Class)) +
@@ -22,6 +28,7 @@ shinyServer(function(input, output) {
         scale_fill_discrete(name = "Status", labels = c("German", "Foreign"))
     }
   })
+  # creating table for summary of user selected variable
   output$summary <- renderDataTable({
     var <- input$var
     dataSubset <- GermanCredit[, c("Class", "InstallmentRatePercentage", var), drop = FALSE]
